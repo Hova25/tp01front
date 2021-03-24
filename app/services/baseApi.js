@@ -6,7 +6,7 @@ class BaseApi {
     getAll() {
         return fetchJSON(this.baseApiUrl)
     }
-    get(id) {
+    getById(id) {
         return fetchJSON(`${this.baseApiUrl}/${id}`)
     }
     delete(id) {
