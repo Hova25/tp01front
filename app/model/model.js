@@ -11,12 +11,21 @@ class Model {
         }
         return items
     }
-    async getAllListNoArchived(idList){
-        let items = []
-        for(let item of await this.apiList.getByListId(idList)){
-            items.push(Object.assign(new Item(), item))
+    async getAllListNoArchived(){
+        let lists = []
+        for(let list of await this.apiList.getAllNoArchived()){
+            list.date = new Date(list.date)
+            lists.push(Object.assign(new List(), list))
         }
-        return items
+        return lists
+    }
+    async getAllListArchived(){
+        let lists = []
+        for(let list of await this.apiList.getAllArchived()){
+            list.date = new Date(list.date)
+            lists.push(Object.assign(new List(), list))
+        }
+        return lists
     }
 
 

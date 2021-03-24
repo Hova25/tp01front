@@ -10,11 +10,34 @@
     <link rel="stylesheet" type="text/css" href="res/css/index.css"/>
 </head>
 <body>
-    <div id="content"></div>
+    <!-- navbar -->
+    <nav>
+        <div class="nav-wrapper" style="background-color: darkred">
+            <a onclick="navigate('index')" style="cursor: pointer; padding-left:10px; font-size: 1.5em" class="brand-logo">Liste de courses V2</a>
+            <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a onclick="" style="cursor: pointer">Nouvelle Liste</a></li>
+                <li><a onclick="navigate('archives')" style="cursor: pointer">Archives</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile">
+        <li><a onclick="" style="cursor: pointer">Nouvelle Liste</a></li>
+        <li><a onclick="navigate('archives')" style="cursor: pointer">Archives</a></li>
+    </ul>
+
+
+
+<div id="content"></div>
 
     <script type="application/ecmascript" src="app/tools.js"></script>
     <script type="application/ecmascript" src="app/model/classes.js"></script>
     <script type="application/ecmascript" src="app/model/model.js"></script>
+    <script type="application/ecmascript" src="app/services/baseApi.js"></script>
+    <script type="application/ecmascript" src="app/services/itemApi.js"></script>
+    <script type="application/ecmascript" src="app/services/listApi.js"></script>
     <script type="application/ecmascript" src="app/controllers/basecontroller.js"></script>
     <script>navigate("index")</script>
 </body>
