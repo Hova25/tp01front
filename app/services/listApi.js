@@ -10,6 +10,12 @@ class ListAPI extends BaseApi{
             headers: { 'Content-Type': 'application/json' }
         })
     }
+    noArchiveList(listId){
+        return fetch(`${this.baseApiUrl}/no_archive/${listId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' }
+        })
+    }
 
     getAllNoArchived() {
         return fetchJSON(`${this.baseApiUrl}/no_archived`)

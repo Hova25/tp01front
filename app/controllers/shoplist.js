@@ -2,11 +2,8 @@ class ShoplistController extends BaseController {
 
     constructor() {
         super();
-        console.log('indexController.selectedList')
-        console.log(indexController.selectedList)
         this.loadProps()
         this.loadData()
-        console.log(this.selectedList)
     }
     loadProps(){
         if(indexController.selectedList!==undefined){

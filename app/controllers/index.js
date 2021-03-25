@@ -7,16 +7,89 @@ class IndexController extends BaseController {
     }
 
     async archiveList(listId){
-        await this.model.archiveList(listId)
-        this.loadNoArchivedList()
+        const response = await this.model.archiveList(listId)
+        await indexController.loadNoArchivedList()
+        return response
     }
     async deleteList(listId){
-        await this.model.deleteList(listId)
-        this.loadNoArchivedList()
+        const response = await this.model.deleteList(listId)
+        // await indexController.loadNoArchivedList()
+        return response
     }
     async seeList(list){
         this.selectedList = await this.model.getListById(list);
         navigate("shoplist")
+    }
+
+    async undoDelete() {
+        if (this.selectedListDeleted) {
+            this.model.insertList(this.selectedListDeleted).then(response => {
+                console.log(response)
+                if (response !== undefined) {
+                    this.selectedListDeleted = null
+                    this.displayUndoDone()
+                    this.loadNoArchivedList()
+                }
+            }).catch(_ => this.displayServiceError())
+        }
+    }
+    async displayConfirmDelete(id) {
+        try {
+            const list = await this.model.getListById(id)
+            super.displayConfirmDelete(list, async () => {
+                switch (await indexController.deleteList(id)) {
+                    case 200:
+                        this.selectedListDeleted = list
+                        console.log(this.selectedListDeleted)
+                        this.displayDeletedMessage("indexController.undoDelete()");
+                        break
+                    case 404:
+                        this.displayNotFoundError();
+                        break
+                    default:
+                        this.displayServiceError()
+                }
+                await indexController.loadNoArchivedList()
+            })
+        } catch (err) {
+            console.log(err)
+            this.displayServiceError()
+        }
+    }
+
+    async undoArchive() {
+        if (this.currentArchivedList) {
+            this.model.noArchiveList(this.currentArchivedList.id).then(response => {
+                console.log(response)
+                if (response !== undefined) {
+                    this.selectedListDeleted = null
+                    this.displayUndoDone()
+                    this.loadNoArchivedList()
+                }
+            }).catch(_ => this.displayServiceError())
+        }
+    }
+
+    async displayConfirmArchive(id) {
+        try {
+            const list = await this.model.getListById(id)
+            super.displayConfirmArchive(list, async () => {
+                switch (await indexController.archiveList(id)) {
+                    case 200:
+                        this.currentArchivedList = list
+                        this.displayArchivedMessage("indexController.undoArchive()");
+                        break
+                    case 404:
+                        this.displayNotFoundError();
+                        break
+                    default:
+                        this.displayServiceError()
+                }
+            })
+        } catch (err) {
+            console.log(err)
+            this.displayServiceError()
+        }
     }
 
     async saveNewList(){
@@ -25,15 +98,16 @@ class IndexController extends BaseController {
         let today = new Date();
         let dateJmoin1 = new Date();
         dateJmoin1.setDate(today.getDate()-1);
-        dateJmoin1 = dateJmoin1.toISOString()
+
+        const dateJmoin1Compare = dateJmoin1.toISOString()
         if(shop ===""){
             this.toast("Veuillez insérer un nom de magasin")
         }
         if(date ===""){
             this.toast("Veuillez insérer une date")
         }
-        if(date<dateJmoin1){
-            this.toast(`Veuillez insérer une date supérieur ou égal à ${dateJmoin1}`)
+        if(date<dateJmoin1Compare){
+            this.toast(`Veuillez insérer une date après le ${dateJmoin1.toLocaleDateString()}`)
             return
         }
         if(shop !=="" && date!==""){
@@ -45,6 +119,8 @@ class IndexController extends BaseController {
             this.getModal("#modalNewShopList").close()
             const idList = await this.model.insertList(newListProps)
             this.selectedList = await this.model.getListById(idList)
+            $("#newShopListName").value = ""
+            $("#newShopListDate").value = ""
             navigate("shoplist")
         }
     }
@@ -60,8 +136,8 @@ class IndexController extends BaseController {
                             <div class="card-content white-text">
                                 <span class="card-title">${list} - ${date}</span>
                                 <button class="btn" onclick="indexController.seeList(${list.id})" >Voir</button>
-                                <button class="btn" onclick="indexController.archiveList(${list.id})" style="background-color: darkred">Archiver</button>
-                                <button class="btn" onclick="indexController.deleteList(${list.id})" style="background-color: darkred">Supprimer</button>
+                                <button class="btn" onclick="indexController.displayConfirmArchive(${list.id})" style="background-color: darkred">Archiver</button>
+                                <button class="btn" onclick="indexController.displayConfirmDelete(${list.id})" style="background-color: darkred">Supprimer</button>
                            </div>
                        </div>
                    </div>

@@ -28,8 +28,15 @@ class Model {
         return lists
     }
 
-    getListById(idList){
-        return this.apiList.getById(idList)
+    async getListById(idList){
+        try {
+            const list = Object.assign(new List(), await this.apiList.getById(idList))
+            list.date = new Date(list.date)
+            return list
+        } catch (e) {
+            if (e === 404) return null
+            return undefined
+        }
     }
 
 
@@ -57,5 +64,8 @@ class Model {
     }
     archiveList(idList){
         return this.apiList.archiveList(idList).then(res => res.status)
+    }
+    noArchiveList(idList){
+        return this.apiList.noArchiveList(idList).then(res => res.status)
     }
 }

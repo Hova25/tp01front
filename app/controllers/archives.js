@@ -1,4 +1,4 @@
-class IndexController extends BaseController {
+class ArchivesController extends BaseController {
     constructor() {
         super()
         this.contentAllArchivedList = $("#allShopListArchived")
@@ -14,7 +14,7 @@ class IndexController extends BaseController {
                     <div class="col s12 m4">
                         <div class="card blue-grey darken-1">
                             <div class="card-content white-text">
-                                <span class="card-title">${list} - ${date}</span>
+                                <span class="card-title">${list} - ${date} <button onclick="archivesController.seeArchiveList(${list.id})" class="btn">Voir</button></span>
                            </div>
                        </div>
                    </div>
@@ -27,6 +27,45 @@ class IndexController extends BaseController {
         }
 
     }
+
+    async seeArchiveList(listId){
+        const dataList = await this.model.getListById(listId)
+        const itemsList = await this.model.getAllItemList(dataList.id)
+        console.log(dataList)
+        console.log(itemsList)
+        const date = dataList.date.toLocaleDateString()
+        $("#titleArchived").innerText = ` ${dataList.toString()} - ${date}`
+        let archivedItemsContent = ""
+         if(itemsList.length>0){
+             archivedItemsContent =
+                 `
+                    <thead>
+                        <th>Label</th>
+                        <th>Quantité</th>
+                    </thead>
+                 `
+             for(const item of itemsList){
+                 let styleLine = ""
+                 if(item.checked === true){
+                     styleLine = "text-decoration: line-through"
+                 }
+                 archivedItemsContent +=
+                     `
+                    <tr>
+                        <td style="${styleLine}">${item.label}</td>
+                        <td style="${styleLine}">${item.quantity}</td>
+                    </tr>
+                    `
+             }
+
+         }else{
+             archivedItemsContent = "Il n'y a pas d'articles enregistré pour cette liste"
+         }
+
+        $("#archivedItems").innerHTML = archivedItemsContent
+
+        this.getModal("#modalVueArchived").open()
+    }
 }
 
-window.indexController = new IndexController()
+window.archivesController = new ArchivesController()
