@@ -38,7 +38,6 @@ class IndexController extends BaseController {
                 switch (await indexController.deleteList(id)) {
                     case 200:
                         this.selectedListDeleted = list
-                        console.log(this.selectedListDeleted)
                         this.displayDeletedMessage(`indexController.undoDelete()`);
                         break
                     case 404:

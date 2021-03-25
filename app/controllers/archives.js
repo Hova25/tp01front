@@ -10,8 +10,6 @@ class ArchivesController extends BaseController {
     async undoDelete() {
         if (this.selectedListDeleted) {
             this.model.insertList(this.selectedListDeleted).then(response => {
-                console.log("lklkk")
-                console.log(response)
                 if (response !== undefined) {
                     this.selectedListDeleted = null
                     this.displayUndoDone()
@@ -27,7 +25,6 @@ class ArchivesController extends BaseController {
                 switch (await archivesController.deleteList(id)) {
                     case 200:
                         this.selectedListDeleted = list
-                        console.log(this.selectedListDeleted)
                         this.displayDeletedMessage(`archivesController.undoDelete()`);
                         break
                     case 404:
@@ -74,8 +71,6 @@ class ArchivesController extends BaseController {
     async seeArchiveList(listId){
         const dataList = await this.model.getListById(listId)
         const itemsList = await this.model.getAllItemList(dataList.id)
-        console.log(dataList)
-        console.log(itemsList)
         const date = dataList.date.toLocaleDateString()
         $("#titleArchived").innerText = ` ${dataList.toString()} - ${date}`
         let archivedItemsContent = ""

@@ -14,11 +14,8 @@ class ShoplistController extends BaseController {
         }
     }
     async checkItem(idItem){
-        console.log(idItem)
         await this.model.changeCheckId(idItem)
-
         await this.loadData()
-        console.log("ok")
     }
 
     async loadData(){
@@ -49,11 +46,6 @@ class ShoplistController extends BaseController {
                 `
             }
             $("#listBody").innerHTML = content
-
-
-            console.log(items)
-
-
         }
     }
     async addArticle(){
