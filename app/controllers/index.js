@@ -125,9 +125,11 @@ class IndexController extends BaseController {
     async loadNoArchivedList(){
         let content = "";
         try{
-            for(const list of await this.model.getAllListNoArchived()){
-                const date = list.date.toLocaleDateString()
-                content += `
+            const allListNoArchived = await this.model.getAllListNoArchived()
+            if(allListNoArchived.length>0) {
+                for (const list of allListNoArchived) {
+                    const date = list.date.toLocaleDateString()
+                    content += `
                     <div class="col s12 m4">
                         <div class="card blue-grey darken-1">
                             <div class="card-content white-text">
@@ -139,6 +141,9 @@ class IndexController extends BaseController {
                        </div>
                    </div>
                 `
+                }
+            }else{
+                content = "Il n'y a actuellement aucune liste en cour"
             }
             this.contentAllNoArchivedList.innerHTML = content
         }catch (err) {

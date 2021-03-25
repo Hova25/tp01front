@@ -44,9 +44,11 @@ class ArchivesController extends BaseController {
     async loadArchivedList(){
         let content = "";
         try{
-            for(const list of await this.model.getAllListArchived()){
-                const date = list.date.toLocaleDateString()
-                content += `
+            const allListArchived = await this.model.getAllListArchived()
+            if(allListArchived.length >0) {
+                for (const list of allListArchived) {
+                    const date = list.date.toLocaleDateString()
+                    content += `
                     <div class="col s12 m4">
                         <div class="card blue-grey darken-1">
                             <div class="card-content white-text">
@@ -59,6 +61,9 @@ class ArchivesController extends BaseController {
                        </div>
                    </div>
                 `
+                }
+            }else{
+                content = "Il n'y a actuellement aucune liste archivée"
             }
             this.contentAllArchivedList.innerHTML = content
         }catch (err) {
