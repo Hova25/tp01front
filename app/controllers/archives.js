@@ -4,6 +4,45 @@ class ArchivesController extends BaseController {
         this.contentAllArchivedList = $("#allShopListArchived")
         this.loadArchivedList()
     }
+    async deleteList(listId){
+        return await this.model.deleteList(listId)
+    }
+    async undoDelete() {
+        if (this.selectedListDeleted) {
+            this.model.insertList(this.selectedListDeleted).then(response => {
+                console.log("lklkk")
+                console.log(response)
+                if (response !== undefined) {
+                    this.selectedListDeleted = null
+                    this.displayUndoDone()
+                    this.loadArchivedList()
+                }
+            }).catch(_ => this.displayServiceError())
+        }
+    }
+    async displayConfirmDelete(id, archived) {
+        try {
+            const list = await this.model.getListById(id)
+            super.displayConfirmDelete(list, async () => {
+                switch (await archivesController.deleteList(id)) {
+                    case 200:
+                        this.selectedListDeleted = list
+                        console.log(this.selectedListDeleted)
+                        this.displayDeletedMessage(`archivesController.undoDelete()`);
+                        break
+                    case 404:
+                        this.displayNotFoundError();
+                        break
+                    default:
+                        this.displayServiceError()
+                }
+                await archivesController.loadArchivedList()
+            })
+        } catch (err) {
+            console.log(err)
+            this.displayServiceError()
+        }
+    }
 
     async loadArchivedList(){
         let content = "";
@@ -14,7 +53,11 @@ class ArchivesController extends BaseController {
                     <div class="col s12 m4">
                         <div class="card blue-grey darken-1">
                             <div class="card-content white-text">
-                                <span class="card-title">${list} - ${date} <button onclick="archivesController.seeArchiveList(${list.id})" class="btn">Voir</button></span>
+                                <span class="card-title">
+                                    ${list} - ${date} 
+                                    <button onclick="archivesController.seeArchiveList(${list.id})" class="btn">Voir</button>
+                                    <button onclick="archivesController.displayConfirmDelete(${list.id})" class="btn" style="background-color: darkred">Supprimer</button>
+                                </span>
                            </div>
                        </div>
                    </div>

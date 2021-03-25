@@ -12,9 +12,7 @@ class IndexController extends BaseController {
         return response
     }
     async deleteList(listId){
-        const response = await this.model.deleteList(listId)
-        // await indexController.loadNoArchivedList()
-        return response
+        return await this.model.deleteList(listId)
     }
     async seeList(list){
         this.selectedList = await this.model.getListById(list);
@@ -33,7 +31,7 @@ class IndexController extends BaseController {
             }).catch(_ => this.displayServiceError())
         }
     }
-    async displayConfirmDelete(id) {
+    async displayConfirmDelete(id, archived) {
         try {
             const list = await this.model.getListById(id)
             super.displayConfirmDelete(list, async () => {
@@ -41,7 +39,7 @@ class IndexController extends BaseController {
                     case 200:
                         this.selectedListDeleted = list
                         console.log(this.selectedListDeleted)
-                        this.displayDeletedMessage("indexController.undoDelete()");
+                        this.displayDeletedMessage(`indexController.undoDelete()`);
                         break
                     case 404:
                         this.displayNotFoundError();
