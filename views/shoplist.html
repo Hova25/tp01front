@@ -1,0 +1,47 @@
+<div class="container">
+
+    <h3 id="titleShopList" >Enregistrement d'une nouvelle liste de course</h3>
+
+    <div class="input-field col s6">
+        <h5>
+            Nom du magasin : <span style="color: darkred" id="shopName"></span>
+        </h5>
+        <table id="shopListTable" >
+            <thead>
+                <tr>
+                    <th>Quoi</th>
+                    <th>Quantité</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="listBody">
+            </tbody>
+            <tfoot>
+            <tr>
+                <td>
+                    <input id="shopListLabel" placeholder="Entrez un produit" type="text" class="validate">
+                </td>
+                <td>
+                    <input id="shopListQuantity" placeholder="Entrez une quantité" type="number" class="validate">
+                </td>
+                <td>
+                    <button id="addArticle" onclick="shopListController.addArticle()" class="btn">Ajouter article</button>
+                </td>
+            </tr>
+            </tfoot>
+
+        </table>
+    </div>
+
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4 id="deleteArticleTitle">Etes-vous sur de vouloir supprimer l'article </h4>
+        </div>
+        <div class="modal-footer">
+            <button class="btn modal-close waves-effect waves-green " style="background-color: darkred">NON</button>
+            <button id="deleteArticle" onclick="shopListController.deleteItem()" class="btn modal-close waves-effect waves-green">OUI</button>
+        </div>
+    </div>
+</div>

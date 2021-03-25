@@ -28,6 +28,10 @@ class Model {
         return lists
     }
 
+    getListById(idList){
+        return this.apiList.getById(idList)
+    }
+
 
 
     deleteItem(idItem) {
@@ -46,7 +50,7 @@ class Model {
         return this.apiList.delete(idList).then(res => res.status)
     }
     insertList(list) {
-        return this.apiList.insert(list).then(res => res.status)
+        return this.apiList.insert(list).then(res => res.json())
     }
     updateList(list) {
         return this.apiList.update(list).then(res => res.status)

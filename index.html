@@ -17,17 +17,42 @@
             <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a onclick="" style="cursor: pointer">Nouvelle Liste</a></li>
+                <li><a class="modal-trigger" href="#modalNewShopList" style="cursor: pointer">Nouvelle Liste</a></li>
                 <li><a onclick="navigate('archives')" style="cursor: pointer">Archives</a></li>
             </ul>
         </div>
     </nav>
 
     <ul class="sidenav" id="mobile">
-        <li><a onclick="" style="cursor: pointer">Nouvelle Liste</a></li>
+        <li><a href="#modalNewShopList" class="modal-trigger" style="cursor: pointer">Nouvelle Liste</a></li>
         <li><a onclick="navigate('archives')" style="cursor: pointer">Archives</a></li>
     </ul>
 
+<!--    modaldelete-->
+    <div id="modalConfirmDelete" class="modal">
+        <div class="modal-content">
+            <h4>Supprimer</h4>
+            <p>Etes vous sûr de vouloir supprimer <span id="spanDeleteObject"></span> ?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn modal-close waves-effect waves-green " style="background-color: darkred">NON</button>
+            <button class="modal-close waves-effect waves-green btn-flat" id="btnDelete">OUI</button>
+        </div>
+    </div>
+
+<!--    modalnewShopList-->
+    <div id="modalNewShopList" class="modal">
+        <div class="modal-content">
+            <h4>Créer une nouvelle liste de courses</h4>
+            <input id="newShopListName" placeholder="Entrez un nom de magasin" type="text" class="validate">
+            <input id="newShopListDate" placeholder="Entrez une date" type="date" class="validate">
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn modal-close waves-effect waves-green " style="background-color: darkred">ANNULER</button>
+            <button class="waves-effect waves-green btn-flat" onclick="indexController.saveNewList()" id="btnCreateNewList">CREER</button>
+        </div>
+    </div>
 
 
 <div id="content"></div>
