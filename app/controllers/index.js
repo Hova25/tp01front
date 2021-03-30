@@ -11,6 +11,7 @@ class IndexController extends BaseController {
         const myAccount = await this.model.apiUserAccount.getMyAccount()
         $("#profileNav").innerHTML = myAccount.displayname
         $("#profileNavMobile").innerHTML = myAccount.displayname
+
     }
 
     async archiveList(listId){
