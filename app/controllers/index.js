@@ -1,6 +1,6 @@
 class IndexController extends BaseController {
     constructor() {
-        super()
+        super(true)
         this.contentAllNoArchivedList = $("#allShopListNoArchived")
         this.loadNoArchivedList()
         this.selectedList = undefined

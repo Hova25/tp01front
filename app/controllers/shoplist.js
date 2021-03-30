@@ -1,7 +1,7 @@
 class ShoplistController extends BaseController {
 
     constructor() {
-        super();
+        super(true);
         this.loadProps()
         this.loadData()
     }

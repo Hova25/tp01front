@@ -1,17 +1,18 @@
 class ItemAPI extends BaseApi{
 
     constructor() {
-        super("http://localhost:3333/item");
+        super("item");
     }
 
     getByListId(listId) {
-        return fetchJSON(`${this.baseApiUrl}/list/${listId}`)
+        return fetchJSON(`${this.baseApiUrl}/list/${listId}`, this.token)
     }
 
     changeCheck(itemId){
+        this.headers.set("Content-Type", 'application/json')
         return fetch(`${this.baseApiUrl}/${itemId}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' }
+            headers: this.headers
         })
     }
 

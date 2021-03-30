@@ -1,26 +1,28 @@
 class ListAPI extends BaseApi{
 
     constructor() {
-        super("http://localhost:3333/list");
+        super("list");
     }
 
     archiveList(listId){
+        this.headers.set("Content-Type", 'application/json')
         return fetch(`${this.baseApiUrl}/${listId}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' }
+            headers: this.headers
         })
     }
     noArchiveList(listId){
+        this.headers.set("Content-Type", 'application/json')
         return fetch(`${this.baseApiUrl}/no_archive/${listId}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' }
+            headers: this.headers
         })
     }
 
     getAllNoArchived() {
-        return fetchJSON(`${this.baseApiUrl}/no_archived`)
+        return fetchJSON(`${this.baseApiUrl}/no_archived`, this.token)
     }
     getAllArchived() {
-        return fetchJSON(`${this.baseApiUrl}/archived`)
+        return fetchJSON(`${this.baseApiUrl}/archived`, this.token)
     }
 }
