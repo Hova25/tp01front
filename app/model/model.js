@@ -2,6 +2,7 @@ class Model {
     constructor() {
         this.apiItem = new ItemAPI()
         this.apiList = new ListAPI()
+        this.apiUserAccount = new UseraccountApi()
     }
 
     async getAllItemList(idList){
@@ -39,7 +40,9 @@ class Model {
         }
     }
 
-
+    getMyAccount(){
+        return this.apiUserAccount.getMyAccount().then(res=>res.json())
+    }
 
     deleteItem(idItem) {
         return this.apiItem.delete(idItem).then(res => res.status)

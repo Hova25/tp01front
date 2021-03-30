@@ -1,9 +1,16 @@
 class IndexController extends BaseController {
     constructor() {
         super(true)
+        this.loadUserPanel()
         this.contentAllNoArchivedList = $("#allShopListNoArchived")
         this.loadNoArchivedList()
         this.selectedList = undefined
+    }
+
+    async loadUserPanel(){
+        const myAccount = await this.model.apiUserAccount.getMyAccount()
+        $("#profileNav").innerHTML = myAccount.displayname
+        $("#profileNavMobile").innerHTML = myAccount.displayname
     }
 
     async archiveList(listId){

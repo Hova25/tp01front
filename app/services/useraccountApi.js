@@ -16,4 +16,8 @@ class UseraccountApi extends BaseApi {
             }
         }).catch(err => reject(err)))
     }
+
+    getMyAccount() {
+        return fetchJSON(`${this.baseApiUrl}/myaccount`, this.token)
+    }
 }
