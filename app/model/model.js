@@ -64,6 +64,9 @@ class Model {
     deleteItem(idItem) {
         return this.apiItem.delete(idItem).then(res => res.status)
     }
+    deletePartageList(partageListId) {
+        return this.apiPartageList.delete(partageListId).then(res => res.status)
+    }
     insertItem(item) {
         return this.apiItem.insert(item).then(res => res.status)
     }

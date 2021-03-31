@@ -88,7 +88,12 @@
             <h4>Visualisation des partages de la liste</h4>
             <ul class="collection" id="partagedList">
             </ul>
-
+<!--            <form id="partageForm" style="display:none">-->
+            <form id="partageForm">
+                <label for="inscriptionEmail">Entrez l'e-mail de la personne à ajouter</label>
+                <input id="inscriptionEmail" placeholder="Entrez l'e-mail de la personne à ajouter" type="text" class="validate">
+            </form>
+            <button id="addPartageBtn" onclick="shopListController.addPartageBtn()" class="btn green darken-3">Ajouter un partage</button>
         </div>
         <div class="modal-footer">
             <button class="btn modal-close waves-effect waves-green " style="background-color: darkred">FERMER</button>
