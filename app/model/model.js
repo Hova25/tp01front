@@ -3,6 +3,7 @@ class Model {
         this.apiItem = new ItemAPI()
         this.apiList = new ListAPI()
         this.apiUserAccount = new UseraccountApi()
+        this.apiPartageList = new PartageListApi()
     }
 
     async getAllItemList(idList){
@@ -34,6 +35,22 @@ class Model {
             const list = Object.assign(new List(), await this.apiList.getById(idList))
             list.date = new Date(list.date)
             return list
+        } catch (e) {
+            if (e === 404) return null
+            return undefined
+        }
+    }
+
+    async getPartagedListByListId(idList){
+        try {
+            const partagedLists = await this.apiPartageList.getByListId(idList)
+            let tabFinal = []
+            for(let partagedList of partagedLists){
+                partagedList = Object.assign(new PartageList(), partagedList)
+                partagedList.useraffilied = await this.apiUserAccount.getById(partagedList.useraccount_id)
+                tabFinal.push(partagedList)
+            }
+            return tabFinal
         } catch (e) {
             if (e === 404) return null
             return undefined

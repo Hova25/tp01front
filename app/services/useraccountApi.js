@@ -21,6 +21,10 @@ class UseraccountApi extends BaseApi {
         return fetchJSON(`${this.baseApiUrl}/myaccount`, this.token)
     }
 
+    getById(id) {
+        return fetchJSON(`${this.baseApiUrl}/get/${id}`,this.token)
+    }
+
     signup(userAccount){
         let headers = new Headers()
         headers.set("Content-Type", 'application/x-www-form-urlencoded')
