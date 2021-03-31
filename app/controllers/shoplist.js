@@ -37,7 +37,7 @@ class ShoplistController extends BaseController {
                             <li class="collection-item">
                                 Pseudo : ${partagedList.useraffilied.displayname} - E-mail : ${partagedList.useraffilied.login} 
                                 <span class="right">
-                                    <a class="btn ${beenhereColor} " title="${visibilityAlt}"><i class="material-icons">beenhere</i></a>
+                                    <a class="btn ${beenhereColor} " onclick="shopListController.updateEditPartageList(${partagedList.id})" title="${visibilityAlt}"><i class="material-icons">beenhere</i></a>
                                     <a class="btn red darken-4"><i class="material-icons">delete</i></a>
                                 </span>
                             </li>
@@ -53,8 +53,11 @@ class ShoplistController extends BaseController {
             $("#partagedList").innerHTML = content
 
         }
+    }
 
-
+    async updateEditPartageList(idPartageList){
+        await this.model.changeEditPartageList(idPartageList)
+        await this.loadPartagedListModal()
     }
 
     async loadData(){

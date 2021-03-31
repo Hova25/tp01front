@@ -73,6 +73,9 @@ class Model {
     changeCheckId(idItem) {
         return this.apiItem.changeCheck(idItem).then(res => res.status)
     }
+    changeEditPartageList(partageListId) {
+        return this.apiPartageList.changeEdit(partageListId).then(res => res.status)
+    }
     deleteList(idList) {
         return this.apiList.delete(idList).then(res => res.status)
     }
