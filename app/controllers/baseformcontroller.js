@@ -11,4 +11,7 @@ class BaseFormController extends BaseController {
         }
         return value
     }
+    checkEmail(email){
+        return email.match(/[a-z0-9_\-\.]+@[a-z0-9_\-\.]+\.[a-z]+/i)
+    }
 }

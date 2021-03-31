@@ -2,7 +2,7 @@ const serviceBaseUrl = "http://localhost:3333"
 class BaseApi {
     constructor(baseApiUrl) {
         this.baseApiUrl = `${serviceBaseUrl}/${baseApiUrl}`
-        this.token = localStorage.getItem("token")
+        this.token = sessionStorage.getItem("token")
         this.headers = new Headers()
         if (this.token !== undefined) {
             this.headers.append("Authorization", `Bearer ${this.token}`)

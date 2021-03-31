@@ -24,3 +24,12 @@ class List {
         return `${this.shop}`
     }
 }
+
+class UserAccount {
+    constructor(displayname, login, challenge) {
+        this.id = null
+        this.displayname = displayname
+        this.login = login
+        this.challenge = challenge
+    }
+}

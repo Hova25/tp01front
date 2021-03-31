@@ -50,7 +50,27 @@
         </div>
         <div class="row">
             <button class="waves-effect waves-light btn" onclick="loginController.authenticate()"><i class="material-icons right">check</i>Se connecter</button>
+            <button class="waves-effect waves-light btn modal-trigger" data-target="modalInscription" style="cursor: pointer"><i class="material-icons right">face</i>S'inscrire</button>
         </div>
+    </div>
+</div>
+
+<!--    modalInscription-->
+<div id="modalInscription" class="modal">
+    <div class="modal-content">
+        <h4>Créer une nouvelle liste de courses</h4>
+        <label for="inscriptionDisplayName">Entrez votre pseudo</label>
+        <input id="inscriptionDisplayName" placeholder="Entrez votre pseudo" type="text" class="validate">
+        <label for="inscriptionEmail">Entrez votre e-mail</label>
+        <input id="inscriptionEmail" placeholder="Entrez votre e-mail" type="text" class="validate">
+        <label for="inscriptionPassword">Entre votre mot de passe</label>
+        <input id="inscriptionPassword" placeholder="Entrez votre mot de passe" type="password" class="validate">
+        <label for="inscriptionPasswordVerif">Entrez la confirmation de votre mot de passe</label>
+        <input id="inscriptionPasswordVerif" placeholder="Entrez de nouveau votre mot de passe" type="password" class="validate">
+    </div>
+    <div class="modal-footer">
+        <button class="btn modal-close waves-effect waves-green " style="background-color: darkred">ANNULER</button>
+        <button class="waves-effect waves-green btn-flat" onclick="loginController.inscription()" id="btnCreateAccount">S'INSCRIRE !</button>
     </div>
 </div>
 

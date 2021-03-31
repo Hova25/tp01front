@@ -41,20 +41,6 @@ class ArchivesController extends BaseController {
         }
     }
 
-    allowDrop(ev) {
-        ev.preventDefault();
-    }
-
-    drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
-    }
-
-    drop(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
-    }
-
     async loadArchivedList(){
         let content = "";
         try{
@@ -63,7 +49,7 @@ class ArchivesController extends BaseController {
                 for (const list of allListArchived) {
                     const date = list.date.toLocaleDateString()
                     content += `
-                    <div id="archiveDiv-${list.id}" class="draggable" draggable="true" ondragstart="drag(event)" class="col s12 m4" >
+                    <div id="archiveDiv-${list.id}" class="col s12 m4" >
                         <div class="card blue-grey darken-1">
                             <div class="card-content white-text">
                                 <span class="card-title">

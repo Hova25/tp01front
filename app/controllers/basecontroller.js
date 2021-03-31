@@ -6,7 +6,7 @@ class BaseController {
         this.model = new Model()
     }
     checkAuthentication() {
-        if (localStorage.getItem("token") === null) {
+        if (sessionStorage.getItem("token") === null) {
             window.location.replace("login.html")
         }
     }

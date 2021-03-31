@@ -20,4 +20,41 @@ class UseraccountApi extends BaseApi {
     getMyAccount() {
         return fetchJSON(`${this.baseApiUrl}/myaccount`, this.token)
     }
+
+    signup(userAccount){
+        let headers = new Headers()
+        headers.set("Content-Type", 'application/x-www-form-urlencoded')
+        return new Promise((resolve, reject) => fetch(`${this.baseApiUrl}/signup`, {
+            method: "POST",
+            headers: headers,
+            body: `displayname=${userAccount.displayname}&login=${userAccount.login}&challenge=${userAccount.challenge}`
+        }).then(async res => {
+            if (res.status === 200) {
+                const auth = await this.authenticate(userAccount.login, userAccount.challenge)
+                resolve({"displayname": userAccount.displayname, "token": auth.token})
+            } else {
+                reject(res.status)
+            }
+        }).catch(err => reject(err)))
+    }
+
+    async checkLoginNoExist(login) {
+        // return new Promise((resolve, reject) => fetch(`${this.baseApiUrl}/checklogin?login=${login}`, {
+        return new Promise((resolve, reject) => fetch(`${this.baseApiUrl}/checklogin?login=${login}`, {
+            method: "GET",
+        }).then(res => {
+            if (res.status === 200) {
+                resolve(res.status)
+            } else if(res.status === 401) {
+                resolve(res.status)
+            }else{
+                reject(res.status)
+            }
+        }).catch(err => {
+           console.log(err)
+            reject(err)
+        }))
+
+    }
+
 }
