@@ -1,10 +1,11 @@
-class ShoplistController extends BaseController {
+class ShoplistController extends BaseFormController {
 
     constructor() {
         super(true);
         this.loadProps()
         this.loadData()
         this.loadPartagedListModal()
+        this.userAccountService = new UseraccountApi()
     }
     loadProps(){
         if(indexController.selectedList!==undefined){
@@ -21,7 +22,7 @@ class ShoplistController extends BaseController {
 
     async loadPartagedListModal(){
         if(this.selectedList!==undefined){
-            let partagedLists = await this.model.getPartagedListByListId(this.selectedList.id)
+            let partagedLists = await this.model.getPartagedListByListId(this.selectedList.id, undefined)
             let content = ""
             if(partagedLists!==null) {
                 if (partagedLists.length > 0) {
@@ -49,16 +50,31 @@ class ShoplistController extends BaseController {
             }else {
                 content += `<li class="collection-item">Cette liste est partagé avec personne</li>`
             }
-
             $("#partagedList").innerHTML = content
-
-
         }
     }
-    addPartageBtn(){
+    async addPartageBtn(){
         if(this.selectedList!==undefined) {
-            console.log('lfkldfkdlk')
-            console.log(this.selectedList)
+            const email = $("#addPartageEmail").value
+            if(!this.checkEmail(email)){
+                this.toast("Attention l'email entré n'est pas au bon format")
+            }else{
+                const userPartaged = await this.userAccountService.getByEmail(email)
+                if(userPartaged!==undefined){
+                    const verifPartagedList = await this.model.getPartagedListByListId(this.selectedList.id, userPartaged.id)
+                    if(verifPartagedList.length > 0){
+                        this.toast(`La list est déjà partagé avec ${userPartaged.displayname}`)
+                    }else{
+                        let newPartageList = new PartageList(this.selectedList.id,indexController.myAccount.id ,userPartaged.id,false)
+                        await this.model.insertPartageList(newPartageList)
+                        await this.loadPartagedListModal()
+                        $("#addPartageEmail").value = ""
+                    }
+                }
+                else{
+                    this.toast(`Aucun compte avec l'email : ${email} existe, demandez à la personne de s'inscrire`)
+                }
+            }
         }
     }
 

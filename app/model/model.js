@@ -41,9 +41,10 @@ class Model {
         }
     }
 
-    async getPartagedListByListId(idList){
+    async getPartagedListByListId(idList, userAccountId){
         try {
-            const partagedLists = await this.apiPartageList.getByListId(idList)
+            const partagedLists = await this.apiPartageList.getByListId(idList,userAccountId)
+
             let tabFinal = []
             for(let partagedList of partagedLists){
                 partagedList = Object.assign(new PartageList(), partagedList)
@@ -58,7 +59,7 @@ class Model {
     }
 
     getMyAccount(){
-        return this.apiUserAccount.getMyAccount().then(res=>res.json())
+        return this.apiUserAccount.getMyAccount().then(res=>res.json)
     }
 
     deleteItem(idItem) {
@@ -66,6 +67,9 @@ class Model {
     }
     deletePartageList(partageListId) {
         return this.apiPartageList.delete(partageListId).then(res => res.status)
+    }
+    async insertPartageList(partageList) {
+        return await this.apiPartageList.insert(partageList).then(res => res.status)
     }
     insertItem(item) {
         return this.apiItem.insert(item).then(res => res.status)

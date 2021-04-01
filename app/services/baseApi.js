@@ -18,9 +18,9 @@ class BaseApi {
     delete(id) {
         return fetch(`${this.baseApiUrl}/${id}`, { method: 'DELETE', headers: this.headers })
     }
-    insert(object) {
+    async insert(object) {
         this.headers.set("Content-Type", 'application/json')
-        return fetch(this.baseApiUrl, {
+        return await fetch(this.baseApiUrl, {
             method: 'POST',
             headers: this.headers,
             body: JSON.stringify(object)

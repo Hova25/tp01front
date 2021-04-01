@@ -24,6 +24,15 @@ class UseraccountApi extends BaseApi {
     getById(id) {
         return fetchJSON(`${this.baseApiUrl}/get/${id}`,this.token)
     }
+    getByEmail(email){
+        try {
+            return fetchJSON(`${this.baseApiUrl}/get/email/${email}`, this.token)
+                .then(result => result)
+                .catch(_ => undefined)
+        }catch (e) {
+            return undefined
+        }
+    }
 
     signup(userAccount){
         let headers = new Headers()

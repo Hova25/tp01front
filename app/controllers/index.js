@@ -8,9 +8,9 @@ class IndexController extends BaseController {
     }
 
     async loadUserPanel(){
-        const myAccount = await this.model.apiUserAccount.getMyAccount()
-        $("#profileNav").innerHTML = myAccount.displayname
-        $("#profileNavMobile").innerHTML = myAccount.displayname
+        this.myAccount = await this.model.apiUserAccount.getMyAccount()
+        $("#profileNav").innerHTML = this.myAccount.displayname
+        $("#profileNavMobile").innerHTML = this.myAccount.displayname
 
     }
 
