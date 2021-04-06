@@ -40,6 +40,22 @@ class Model {
             return undefined
         }
     }
+    async getAllListPartaged(){
+        try {
+            const partagedLists = await this.apiPartageList.getAllListPartaged()
+            let tabFinal = []
+            for(let partagedList of partagedLists){
+                partagedList = Object.assign(new PartageList(), partagedList)
+                partagedList.useraffilied = await this.apiUserAccount.getById(partagedList.useraccount_id)
+                partagedList.list = await this.getListById(partagedList.id_list)
+                tabFinal.push(partagedList)
+            }
+            return tabFinal
+        } catch (e) {
+            if (e === 404) return null
+            return undefined
+        }
+    }
 
     async getPartagedListByListId(idList, userAccountId){
         try {

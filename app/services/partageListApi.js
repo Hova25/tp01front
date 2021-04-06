@@ -25,6 +25,10 @@ class PartageListApi extends BaseApi {
         }
     }
 
+    getAllListPartaged(){
+        return fetchJSON(`${this.baseApiUrl}/partaged`, this.token)
+    }
+
 
     changeEdit(partageListId){
         this.headers.set("Content-Type", 'application/json')
