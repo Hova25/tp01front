@@ -4,8 +4,14 @@ class ItemAPI extends BaseApi{
         super("item");
     }
 
-    getByListId(listId) {
-        return fetchJSON(`${this.baseApiUrl}/list/${listId}`, this.token)
+    getByListId(listId, idUser) {
+        let filterIdUser = ""
+        console.log("lklk")
+        console.log(idUser)
+        if(idUser!==undefined){
+            filterIdUser = `?useraccount_id=${idUser}`
+        }
+        return fetchJSON(`${this.baseApiUrl}/list/${listId}${filterIdUser}`, this.token)
     }
 
     changeCheck(itemId){

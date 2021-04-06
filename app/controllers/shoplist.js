@@ -4,7 +4,10 @@ class ShoplistController extends BaseFormController {
         super(true);
         this.loadProps()
         this.loadData()
-        this.loadPartagedListModal()
+        if(indexController.partagedList===true){
+            $("#partagedBtn").innerHTML = " - Liste partagé  "
+            this.loadPartagedListModal()
+        }
         this.userAccountService = new UseraccountApi()
     }
     loadProps(){
@@ -92,7 +95,12 @@ class ShoplistController extends BaseFormController {
         if(this.selectedList!==undefined){
             $("#titleShopList").innerText = "Modification d'une liste"
             $("#shopName").innerHTML = this.selectedList.shop
-            let items = await this.model.getAllItemList(this.selectedList.id)
+            let items = []
+            if(indexController.partagedList===true){
+                items = await this.model.getAllItemList(this.selectedList.id, this.selectedList.useraccount_id)
+            }else {
+                items = await this.model.getAllItemList(this.selectedList.id)
+            }
             let content = ""
             for(const item of items){
                 let styleLine = ""

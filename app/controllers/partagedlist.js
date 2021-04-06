@@ -19,7 +19,11 @@ class PartagedListController extends BaseController {
                             <div class="card-content white-text">
                                 <span class="card-title">
                                     ${list} - ${date} 
-<!--                                    <button onclick="partageListController.seePartagedList(${list.id})" class="btn">Voir</button>-->
+                                    ${
+                                    listPartaged.edit === false ?
+                                    `<button onclick="partageListController.seePartagedList(${list.id}, ${listPartaged.owneruser_id})" class="btn">Voir</button>`: 
+                                        `<button onclick="indexController.seeList(${list.id}, true)" class="btn">Voir/Modifier</button>` 
+                                    }
                                 </span>
                            </div>
                        </div>
@@ -35,6 +39,47 @@ class PartagedListController extends BaseController {
             this.displayServiceError()
         }
 
+    }
+    async updatePartagedList(listId){
+        console.log("update")
+    }
+
+    async seePartagedList(listId, owner_id){
+        this.getModal("#modalVuePartaged").open()
+            const dataList = await this.model.getListById(listId)
+            const itemsList = await this.model.getAllItemList(dataList.id, owner_id)
+            const date = dataList.date.toLocaleDateString()
+            $("#titlePartaged").innerText = ` ${dataList.toString()} - ${date}`
+            let partagedItemsContent = ""
+            if(itemsList.length>0){
+                partagedItemsContent =
+                    `
+                        <thead>
+                            <th>Label</th>
+                            <th>Quantité</th>
+                        </thead>
+                     `
+                for(const item of itemsList){
+                    let styleLine = ""
+                    if(item.checked === true){
+                        styleLine = "text-decoration: line-through"
+                    }
+                    partagedItemsContent +=
+                        `
+                        <tr>
+                            <td style="${styleLine}">${item.label}</td>
+                            <td style="${styleLine}">${item.quantity}</td>
+                        </tr>
+                        `
+                }
+
+            }else{
+                partagedItemsContent = "Il n'y a pas d'articles enregistré pour cette liste"
+            }
+
+            $("#partagedItems").innerHTML = partagedItemsContent
+
+            this.getModal("#modalVuePartaged").open()
     }
 
     // async justSeeList(listId){

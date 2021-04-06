@@ -5,6 +5,7 @@ class IndexController extends BaseController {
         this.contentAllNoArchivedList = $("#allShopListNoArchived")
         this.loadNoArchivedList()
         this.selectedList = undefined
+        this.partagedList = false
     }
 
     async loadUserPanel(){
@@ -22,7 +23,10 @@ class IndexController extends BaseController {
     async deleteList(listId){
         return await this.model.deleteList(listId)
     }
-    async seeList(list){
+    async seeList(list, partagedList){
+        if(partagedList===true){
+            this.partagedList = true
+        }
         this.selectedList = await this.model.getListById(list);
         navigate("shoplist")
     }

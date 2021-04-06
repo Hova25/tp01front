@@ -6,9 +6,10 @@ class Model {
         this.apiPartageList = new PartageListApi()
     }
 
-    async getAllItemList(idList){
+    async getAllItemList(idList, idUser){
         let items = []
-        for(let item of await this.apiItem.getByListId(idList)){
+        console.log( await this.apiItem.getByListId(idList, idUser))
+        for(let item of await this.apiItem.getByListId(idList, idUser)){
             items.push(Object.assign(new Item(), item))
         }
         return items
@@ -48,6 +49,9 @@ class Model {
                 partagedList = Object.assign(new PartageList(), partagedList)
                 partagedList.useraffilied = await this.apiUserAccount.getById(partagedList.useraccount_id)
                 partagedList.list = await this.getListById(partagedList.id_list)
+                if(partagedList.list.archived === true){
+                    continue
+                }
                 tabFinal.push(partagedList)
             }
             return tabFinal
