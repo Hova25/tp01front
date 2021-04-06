@@ -6,8 +6,6 @@ class ItemAPI extends BaseApi{
 
     getByListId(listId, idUser) {
         let filterIdUser = ""
-        console.log("lklk")
-        console.log(idUser)
         if(idUser!==undefined){
             filterIdUser = `?useraccount_id=${idUser}`
         }

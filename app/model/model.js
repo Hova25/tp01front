@@ -6,9 +6,10 @@ class Model {
         this.apiPartageList = new PartageListApi()
     }
 
+
+
     async getAllItemList(idList, idUser){
         let items = []
-        console.log( await this.apiItem.getByListId(idList, idUser))
         for(let item of await this.apiItem.getByListId(idList, idUser)){
             items.push(Object.assign(new Item(), item))
         }
@@ -36,6 +37,14 @@ class Model {
             const list = Object.assign(new List(), await this.apiList.getById(idList))
             list.date = new Date(list.date)
             return list
+        } catch (e) {
+            if (e === 404) return null
+            return undefined
+        }
+    }
+    async getPartageListById(idPartageList, user_id){
+        try {
+            return Object.assign(new PartageList(), await this.apiPartageList.getById(idPartageList, user_id))
         } catch (e) {
             if (e === 404) return null
             return undefined

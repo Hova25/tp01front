@@ -6,8 +6,9 @@ class ShoplistController extends BaseFormController {
         this.loadData()
         if(indexController.partagedList===true){
             $("#partagedBtn").innerHTML = " - Liste partagé  "
-            this.loadPartagedListModal()
         }
+        this.loadPartagedListModal()
+
         this.userAccountService = new UseraccountApi()
     }
     loadProps(){
@@ -22,6 +23,43 @@ class ShoplistController extends BaseFormController {
         await this.model.changeCheckId(idItem)
         await this.loadData()
     }
+    async undoDelete() {
+        console.log(this.selectedPartageListDeleted)
+        if (this.selectedPartageListDeleted) {
+            this.model.insertPartageList(this.selectedPartageListDeleted).then(async response => {
+                console.log(response)
+                if (response !== undefined) {
+                    this.selectedPartageListDeleted = null
+                    this.displayUndoDone()
+                    await shopListController.loadPartagedListModal()
+                }
+            }).catch(_ => this.displayServiceError())
+        }
+    }
+
+    async displayConfirmDeletePartagedList(id, user_id) {
+        try {
+            const partagedList = await this.model.getPartageListById(id, user_id)
+            super.displayConfirmDelete(partagedList, async () => {
+                switch (await shopListController.deleteEditPartageList(id)) {
+                    case 200:
+                        this.selectedPartageListDeleted = partagedList
+                        this.displayDeletedMessage(`shopListController.undoDelete()`);
+                        break
+                    case 404:
+                        this.displayNotFoundError();
+                        break
+                    default:
+                        this.displayServiceError()
+                }
+                await shopListController.loadPartagedListModal()
+            })
+        } catch (err) {
+            console.log(err)
+            this.displayServiceError()
+        }
+    }
+
 
     async loadPartagedListModal(){
         if(this.selectedList!==undefined){
@@ -42,7 +80,7 @@ class ShoplistController extends BaseFormController {
                                 Pseudo : ${partagedList.useraffilied.displayname} - E-mail : ${partagedList.useraffilied.login} 
                                 <span class="right">
                                     <a class="btn ${beenhereColor} " onclick="shopListController.updateEditPartageList(${partagedList.id})" title="${visibilityAlt}"><i class="material-icons">beenhere</i></a>
-                                    <a class="btn red darken-4" onclick="shopListController.deleteEditPartageList(${partagedList.id})"><i class="material-icons">delete</i></a>
+                                    <a class="btn red darken-4" onclick="shopListController.displayConfirmDeletePartagedList(${partagedList.id}, ${partagedList.owneruser_id})"><i class="material-icons">delete</i></a>
                                 </span>
                             </li>
                         `
@@ -87,8 +125,7 @@ class ShoplistController extends BaseFormController {
     }
 
     async deleteEditPartageList(idPartageList){
-        await this.model.deletePartageList(idPartageList)
-        await this.loadPartagedListModal()
+        return await this.model.deletePartageList(idPartageList)
     }
 
     async loadData(){

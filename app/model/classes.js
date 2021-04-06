@@ -42,4 +42,7 @@ class PartageList {
         this.useraccount_id = useraccount_id
         this.edit = edit
     }
+    toString(){
+        return "le partage de la liste"
+    }
 }

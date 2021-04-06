@@ -40,9 +40,6 @@ class PartagedListController extends BaseController {
         }
 
     }
-    async updatePartagedList(listId){
-        console.log("update")
-    }
 
     async seePartagedList(listId, owner_id){
         this.getModal("#modalVuePartaged").open()

@@ -8,7 +8,15 @@ class PartageListApi extends BaseApi {
         return fetchJSON(`${this.baseApiUrl}`, this.token)
     }
 
-   async getByListId(listId, userAccountId){
+    getById(id, user_id) {
+        let filterUserId = ""
+        if(user_id !==undefined){
+            filterUserId = `?owneruser_id=${user_id}`
+        }
+        return fetchJSON(`${this.baseApiUrl}/${id}${filterUserId}`,this.token)
+    }
+
+    async getByListId(listId, userAccountId){
         if(userAccountId!==undefined){
             return new Promise((resolve, reject) => fetch(`${this.baseApiUrl}/${listId}?useraccount_id=${userAccountId}`, {
                 method: "GET",
