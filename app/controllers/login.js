@@ -13,33 +13,29 @@ class LoginController extends BaseFormController {
                 test++
             }
             if(test===0) {
-                await this.service.checkLoginNoExist(login)
-                    .then(async res => {
-                        if (res === 200) {
-                            this.toast("Attention ce login n'existe pas")
-                        } else if (res===401){
-                            await this.service.authenticate(login, password)
-                                .then(res => {
-                                    sessionStorage.setItem("token", res.token)
-                                    window.location.replace("index.html")
-                                })
-                                .catch(err => {
-                                    console.log(err)
-                                    if (err === 401) {
-                                        this.toast("Adresse e-mail ou mot de passe incorrect")
-                                    } else {
-                                        this.displayServiceError()
-                                    }
-                                })
-                        }
-                        else{
-                            this.displayServiceError()
-                        }
-                    })
-                    .catch(e => {
-                        this.displayServiceError()
-                    })
+                const user =  await this.service.getByEmail(login)
+                if(user === undefined){
+                    this.toast("Adresse e-mail ou mot de passe incorrect")
+                }else{
+                    if(user.active===false){
 
+
+                    }else{
+                        await this.service.authenticate(login, password)
+                            .then(res => {
+                                sessionStorage.setItem("token", res.token)
+                                window.location.replace("index.html")
+                            })
+                            .catch(err => {
+                                if (err === 401) {
+                                    this.toast("Adresse e-mail ou mot de passe incorrect")
+                                } else {
+                                    this.displayServiceError()
+                                }
+                            })
+
+                    }
+                }
             }
         }
     }
@@ -63,14 +59,15 @@ class LoginController extends BaseFormController {
                 .then(async res => {
                     if (res === 200) {
                         if (inscriptionDisplayName !== null && inscriptionEmail !== null && inscriptionPassword !== null) {
-                            const auth = await this.service.signup(new UserAccount(inscriptionDisplayName, inscriptionEmail, inscriptionPassword))
-                            this.toast(`Merci d'avoir créer votre compte ${auth.displayname}`)
+                            const account = await this.service.signup(new UserAccount(inscriptionDisplayName, inscriptionEmail, inscriptionPassword))
+                            await this.model.mailConfirmation(account)
+                            this.toast(`Merci d'avoir créer votre compte ${account.displayname} un email vous a été envoyé pour valider votre compte et pouvoir vous connecter`)
+
                             $("#inscriptionDisplayName").innerText = ""
                             $("#inscriptionEmail").innerText = ""
                             $("#inscriptionPassword").innerText = ""
                             $("#inscriptionPasswordVerif").innerText = ""
-                            sessionStorage.setItem("token", auth.token)
-                            window.location.replace("index.html")
+                            this.getModal("#modalInscription").close()
                         }
                     } else if (res === 401) {
                         this.toast("Création de compte impossible l'e-mail existe deja")

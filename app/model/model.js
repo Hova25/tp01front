@@ -4,9 +4,12 @@ class Model {
         this.apiList = new ListAPI()
         this.apiUserAccount = new UseraccountApi()
         this.apiPartageList = new PartageListApi()
+        this.apiMailer = new MailerAPI()
     }
 
-
+    async mailConfirmation(account){
+        return this.apiMailer.validation_account(account)
+    }
 
     async getAllItemList(idList, idUser){
         let items = []

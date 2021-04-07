@@ -26,11 +26,13 @@ class List {
 }
 
 class UserAccount {
-    constructor(displayname, login, challenge) {
+    constructor(displayname, login, challenge, active, confirmation_code) {
         this.id = null
         this.displayname = displayname
         this.login = login
         this.challenge = challenge
+        this.active = active
+        this.confirmation_code = confirmation_code
     }
 }
 

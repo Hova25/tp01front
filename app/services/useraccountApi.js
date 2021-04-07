@@ -43,8 +43,8 @@ class UseraccountApi extends BaseApi {
             body: `displayname=${userAccount.displayname}&login=${userAccount.login}&challenge=${userAccount.challenge}`
         }).then(async res => {
             if (res.status === 200) {
-                const auth = await this.authenticate(userAccount.login, userAccount.challenge)
-                resolve({"displayname": userAccount.displayname, "token": auth.token})
+                const account = await this.getByEmail(userAccount.login)
+                resolve(Object.assign(new UserAccount(), account))
             } else {
                 reject(res.status)
             }
