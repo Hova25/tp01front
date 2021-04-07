@@ -3,81 +3,85 @@
     <head>
         <title>Liste de course V2</title>
         <meta charset="UTF-8">
-     bvc
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="res/css/index.css"/>
     </head>
     <body>
-        <!-- navbar -->
-        <nav>
-            <div class="nav-wrapper" style="background-color: darkred">
-                <a onclick="navigate('index')" style="cursor: pointer; padding-left:10px; font-size: 1.5em" class="brand-logo">Liste de courses V2</a>
-                <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <!-- navbar -->
+    <nav>
+        <div class="nav-wrapper" style="background-color: darkred">
+            <a onclick="navigate('index')" style="cursor: pointer; padding-left:10px; font-size: 1.5em" class="brand-logo">Liste de courses V2</a>
+            <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a onclick="navigate('index')" style="cursor: pointer">Accueil</a></li>
-                </ul>
-            </div>
-        </nav>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a onclick="navigate('index')" style="cursor: pointer">Accueil</a></li>
+            </ul>
+        </div>
+    </nav>
 
-        <ul class="sidenav" id="mobile">
-            <li><a onclick="navigate('index')" style="cursor: pointer">Accueil</a></li>
-        </ul>
+    <ul class="sidenav" id="mobile">
+        <li><a onclick="navigate('index')" style="cursor: pointer">Accueil</a></li>
+    </ul>
 
 
-        <div class="container">
-            <h3>Connexion</h3>
-            <div>
-                <div class="row">
-                    <form class="col s12" id="formLogin">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="fieldLogin" type="text" class="validate" value="user1@exemple.fr">
-                                <label for="fieldLogin" class="active">Adresse e-mail</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <input id="fieldPassword" type="password" class="validate">
-                                <label for="fieldPassword" class="active">Mot de passe</label>
-                            </div>
+    <div class="container">
+        <h3>Connexion</h3>
+        <div>
+            <div class="row">
+                <form class="col s12" id="formLogin">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="fieldLogin" type="text" class="validate" value="user1@exemple.fr">
+                            <label for="fieldLogin" class="active">Adresse e-mail</label>
                         </div>
-                    </form>
-                </div>
-                <div class="row">
-                    <button class="waves-effect waves-light btn" onclick="loginController.authenticate()"><i class="material-icons right">check</i>Se connecter</button>
-                    <button class="waves-effect waves-light btn modal-trigger" data-target="modalInscription" style="cursor: pointer"><i class="material-icons right">face</i>S'inscrire</button>
-                </div>
+                        <div class="input-field col s12">
+                            <input id="fieldPassword" type="password" class="validate">
+                            <label for="fieldPassword" class="active">Mot de passe</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <button class="waves-effect waves-light btn" onclick="loginController.authenticate()"><i class="material-icons right">check</i>Se connecter</button>
+                <button class="waves-effect waves-light btn modal-trigger" data-target="modalInscription" style="cursor: pointer"><i class="material-icons right">face</i>S'inscrire</button>
             </div>
         </div>
+    </div>
 
-        <!--    modalInscription-->
-        <div id="modalInscription" class="modal">
-            <div class="modal-content">
-                <h4>Créer une nouvelle liste de courses</h4>
-                <label for="inscriptionDisplayName">Entrez votre pseudo</label>
-                <input id="inscriptionDisplayName" placeholder="Entrez votre pseudo" type="text" class="validate">
-                <label for="inscriptionEmail">Entrez votre e-mail</label>
-                <input id="inscriptionEmail" placeholder="Entrez votre e-mail" type="text" class="validate">
-                <label for="inscriptionPassword">Entre votre mot de passe</label>
-                <input id="inscriptionPassword" placeholder="Entrez votre mot de passe" type="password" class="validate">
-                <label for="inscriptionPasswordVerif">Entrez la confirmation de votre mot de passe</label>
-                <input id="inscriptionPasswordVerif" placeholder="Entrez de nouveau votre mot de passe" type="password" class="validate">
-            </div>
-            <div class="modal-footer">
-                <button class="btn modal-close waves-effect waves-green " style="background-color: darkred">ANNULER</button>
-                <button class="waves-effect waves-green btn-flat" onclick="loginController.inscription()" id="btnCreateAccount">S'INSCRIRE !</button>
-            </div>
+    <!--    modalInscription-->
+    <div id="modalInscription" class="modal">
+        <div class="modal-content">
+            <h4>Créer une nouvelle liste de courses</h4>
+            <label for="inscriptionDisplayName">Entrez votre pseudo</label>
+            <input id="inscriptionDisplayName" placeholder="Entrez votre pseudo" type="text" class="validate">
+            <label for="inscriptionEmail">Entrez votre e-mail</label>
+            <input id="inscriptionEmail" placeholder="Entrez votre e-mail" type="text" class="validate">
+            <label for="inscriptionPassword">Entre votre mot de passe</label>
+            <input id="inscriptionPassword" placeholder="Entrez votre mot de passe" type="password" class="validate">
+            <label for="inscriptionPasswordVerif">Entrez la confirmation de votre mot de passe</label>
+            <input id="inscriptionPasswordVerif" placeholder="Entrez de nouveau votre mot de passe" type="password" class="validate">
         </div>
+        <div class="modal-footer">
+            <button class="btn modal-close waves-effect waves-green " style="background-color: darkred">ANNULER</button>
+            <button class="waves-effect waves-green btn-flat" onclick="loginController.inscription()" id="btnCreateAccount">S'INSCRIRE !</button>
+        </div>
+    </div>
 
-        <script type="application/ecmascript" src="app/tools.js"></script>
-        <script type="application/ecmascript" src="app/model/classes.js"></script>
-        <script type="application/ecmascript" src="app/model/model.js"></script>
-        <script type="application/ecmascript" src="app/services/baseApi.js"></script>
-        <script type="application/ecmascript" src="app/services/itemApi.js"></script>
-        <script type="application/ecmascript" src="app/services/listApi.js"></script>
-        <script type="application/ecmascript" src="app/services/mailerApi.js"></script>
-        <script type="application/ecmascript" src="app/services/useraccountApi.js"></script>
-        <script type="application/ecmascript" src="app/services/partageListApi.js"></script>
-        <script type="application/ecmascript" src="app/controllers/basecontroller.js"></script>
-        <script type="application/ecmascript" src="app/controllers/baseformcontroller.js"></script>
-        <script type="application/ecmascript" src="app/controllers/login.js"></script>
+    <script type="application/ecmascript" src="app/tools.js"></script>
+    <script type="application/ecmascript" src="app/model/classes.js"></script>
+    <script type="application/ecmascript" src="app/model/model.js"></script>
+    <script type="application/ecmascript" src="app/services/baseApi.js"></script>
+    <script type="application/ecmascript" src="app/services/itemApi.js"></script>
+    <script type="application/ecmascript" src="app/services/listApi.js"></script>
+    <script type="application/ecmascript" src="app/services/mailerApi.js"></script>
+    <script type="application/ecmascript" src="app/services/useraccountApi.js"></script>
+    <script type="application/ecmascript" src="app/services/partageListApi.js"></script>
+    <script type="application/ecmascript" src="app/controllers/basecontroller.js"></script>
+    <script type="application/ecmascript" src="app/controllers/baseformcontroller.js"></script>
+    <script type="application/ecmascript" src="app/controllers/login.js"></script>
 
     </body>
 </html>

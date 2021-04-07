@@ -24,10 +24,8 @@ class ShoplistController extends BaseFormController {
         await this.loadData()
     }
     async undoDelete() {
-        console.log(this.selectedPartageListDeleted)
         if (this.selectedPartageListDeleted) {
             this.model.insertPartageList(this.selectedPartageListDeleted).then(async response => {
-                console.log(response)
                 if (response !== undefined) {
                     this.selectedPartageListDeleted = null
                     this.displayUndoDone()

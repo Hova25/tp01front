@@ -8,7 +8,6 @@ class PartagedListController extends BaseController {
         let content = "";
         try{
             const allListPartaged = await this.model.getAllListPartaged()
-            console.log(allListPartaged)
             if(allListPartaged.length >0) {
                 for (const listPartaged of allListPartaged) {
                     const list = listPartaged.list

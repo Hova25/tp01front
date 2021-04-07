@@ -34,7 +34,6 @@ class IndexController extends BaseController {
     async undoDelete() {
         if (this.selectedListDeleted) {
             this.model.insertList(this.selectedListDeleted).then(response => {
-                console.log(response)
                 if (response !== undefined) {
                     this.selectedListDeleted = null
                     this.displayUndoDone()
@@ -69,7 +68,6 @@ class IndexController extends BaseController {
     async undoArchive() {
         if (this.currentArchivedList) {
             this.model.noArchiveList(this.currentArchivedList.id).then(response => {
-                console.log(response)
                 if (response !== undefined) {
                     this.selectedListDeleted = null
                     this.displayUndoDone()

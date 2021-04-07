@@ -17,27 +17,33 @@ class LoginController extends BaseFormController {
                 if(user === undefined){
                     this.toast("Adresse e-mail ou mot de passe incorrect")
                 }else{
-                    if(user.active===false){
-
-
-                    }else{
-                        await this.service.authenticate(login, password)
-                            .then(res => {
+                    await this.service.authenticate(login, password)
+                        .then(res => {
+                            if(user.active===false){
+                                this.toast(`<span>Attention vous devez activer votre compte par e-mail</span><button class="btn-flat toast-action" onclick="loginController.updateConfirmationCode()">Renvoyer le mail de confirmation</button>`)
+                            }else{
                                 sessionStorage.setItem("token", res.token)
                                 window.location.replace("index.html")
-                            })
-                            .catch(err => {
-                                if (err === 401) {
-                                    this.toast("Adresse e-mail ou mot de passe incorrect")
-                                } else {
-                                    this.displayServiceError()
-                                }
-                            })
-
-                    }
+                            }
+                        })
+                        .catch(err => {
+                            if (err === 401) {
+                                this.toast("Adresse e-mail ou mot de passe incorrect")
+                            } else {
+                                this.displayServiceError()
+                            }
+                        })
                 }
             }
         }
+    }
+
+    async updateConfirmationCode(){
+        const login = $("#fieldLogin").value
+        await this.model.apiUserAccount.updateConfirmationCode(login)
+        const user =  await this.service.getByEmail(login)
+        await this.model.mailConfirmation(user)
+        this.toast(`L'e-mail de confirmation a bien été renvoyé à l'adresse ${login}`)
     }
 
     async inscription(){
@@ -63,10 +69,10 @@ class LoginController extends BaseFormController {
                             await this.model.mailConfirmation(account)
                             this.toast(`Merci d'avoir créer votre compte ${account.displayname} un email vous a été envoyé pour valider votre compte et pouvoir vous connecter`)
 
-                            $("#inscriptionDisplayName").innerText = ""
-                            $("#inscriptionEmail").innerText = ""
-                            $("#inscriptionPassword").innerText = ""
-                            $("#inscriptionPasswordVerif").innerText = ""
+                            $("#inscriptionDisplayName").value = ""
+                            $("#inscriptionEmail").value = ""
+                            $("#inscriptionPassword").value = ""
+                            $("#inscriptionPasswordVerif").value = ""
                             this.getModal("#modalInscription").close()
                         }
                     } else if (res === 401) {
@@ -76,6 +82,7 @@ class LoginController extends BaseFormController {
                     }
                 })
                 .catch(e => {
+                    console.log(e)
                     this.displayServiceError()
                 })
         }

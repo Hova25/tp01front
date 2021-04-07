@@ -33,6 +33,15 @@ class UseraccountApi extends BaseApi {
             return undefined
         }
     }
+    getByConfirmationCode(confirmation_code){
+        try {
+            return fetchJSON(`${this.baseApiUrl}/get/confirmation_code/${confirmation_code}`)
+                .then(result => result)
+                .catch(_ => undefined)
+        }catch (e) {
+            return undefined
+        }
+    }
 
     signup(userAccount){
         let headers = new Headers()
@@ -68,6 +77,21 @@ class UseraccountApi extends BaseApi {
             reject(err)
         }))
 
+    }
+
+    updateValidation(confirmation_code){
+        this.headers.set("Content-Type", 'application/json')
+        return fetch(`${this.baseApiUrl}/update_validation/${confirmation_code}`, {
+            method: 'PATCH',
+            headers: this.headers
+        })
+    }
+    async updateConfirmationCode(login){
+        this.headers.set("Content-Type", 'application/json')
+        return await fetch(`${this.baseApiUrl}/update_confirmation_code/${login}`, {
+            method: 'PATCH',
+            headers: this.headers
+        })
     }
 
 }
