@@ -17,7 +17,7 @@ class IndexController extends BaseController {
 
     }
     async loadAdminPanel(){
-        const userAccess = await this.model.apiUserAccount.checkUserAccesRule(2,this.myAccount.id)
+        const userAccess = await this.model.apiUserAccount.checkUserAccessRole(2,this.myAccount.id)
         if(userAccess.status===200){
             $("#adminPanelBtn").style.display = "block"
             $("#adminPanelBtnMobile").style.display = "block"

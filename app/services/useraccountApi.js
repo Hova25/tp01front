@@ -24,6 +24,9 @@ class UseraccountApi extends BaseApi {
     getById(id) {
         return fetchJSON(`${this.baseApiUrl}/get/${id}`,this.token)
     }
+    getByAll() {
+        return fetchJSON(`${this.baseApiUrl}`,this.token)
+    }
     getByEmail(email){
         try {
             return fetchJSON(`${this.baseApiUrl}/get/email/${email}`, this.token)
@@ -117,12 +120,12 @@ class UseraccountApi extends BaseApi {
             body: JSON.stringify({"challenge": password})
         })
     }
-    async checkUserAccesRule(idRule, idUserAccount) {
+    async checkUserAccessRole(idRole, idUserAccount) {
         this.headers.set("Content-Type", 'application/json')
         return await fetch(`${this.baseApiUrl}/checkrule`, {
             method: 'POST',
             headers: this.headers,
-            body: JSON.stringify({"idRule": idRule, "idUserAccount": idUserAccount})
+            body: JSON.stringify({"idRole": idRole, "idUserAccount": idUserAccount})
         })
     }
     async updatePasswordAccount(id, password){

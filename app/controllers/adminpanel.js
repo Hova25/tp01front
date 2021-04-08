@@ -3,7 +3,35 @@ class AdminPanelController extends BaseController {
         super(true)
         console.log("adminPanelController")
         this.loadNavBarAdmin()
+        this.loadUserAccountTable()
     }
+
+    async loadUserAccountTable(){
+        let content = ""
+        await this.model.apiUserAccount.getAll()
+            .then(async allUserAccount => {
+                for(const user of allUserAccount){
+                    content +=
+                        `
+                            <tr>
+                                <td>${user.displayname}</td>
+                                <td>${user.login}</td>
+                                <td>${user.active===true ? "Active" : "Inactif" }</td>
+                                <td>
+                                    <button class="btn" title="${user.active===true ? 'Activer compte' :'Désactiver compte'}">${user.active===true ? '<i class="material-icons">close</i>' : '<i class="material-icons">done</i>' }</button>
+                                    <button class="btn" title="modifier utilisateur: ${user.displayname}"> <i class="material-icons">edit</i></button>
+                                    <button class="btn" title="Envoie mail réinitialisation mot de passe"><i class="material-icons">email</i></button>
+                                </td>
+                            </tr>
+                        `
+                }
+            })
+
+
+
+        $("#userAccountTableBody").innerHTML = content
+    }
+
 
     loadNavBarAdmin(){
         $("#nav-bar").innerHTML =
