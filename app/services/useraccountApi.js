@@ -117,6 +117,14 @@ class UseraccountApi extends BaseApi {
             body: JSON.stringify({"challenge": password})
         })
     }
+    async checkUserAccesRule(idRule, idUserAccount) {
+        this.headers.set("Content-Type", 'application/json')
+        return await fetch(`${this.baseApiUrl}/checkrule`, {
+            method: 'POST',
+            headers: this.headers,
+            body: JSON.stringify({"idRule": idRule, "idUserAccount": idUserAccount})
+        })
+    }
     async updatePasswordAccount(id, password){
         this.headers.set("Content-Type", 'application/json')
         return await fetch(`${this.baseApiUrl}/update_password`, {
@@ -133,5 +141,7 @@ class UseraccountApi extends BaseApi {
             body: JSON.stringify({"id": id, "displayname":displayname, "login":login})
         })
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 class IndexController extends BaseController {
     constructor() {
         super(true)
+        this.loadNavBar()
         this.loadUserPanel()
         this.contentAllNoArchivedList = $("#allShopListNoArchived")
         this.loadNoArchivedList()
@@ -12,7 +13,15 @@ class IndexController extends BaseController {
         this.myAccount = await this.model.apiUserAccount.getMyAccount()
         $("#profileNav").innerHTML = this.myAccount.displayname
         $("#profileNavMobile").innerHTML = this.myAccount.displayname
+        await this.loadAdminPanel()
 
+    }
+    async loadAdminPanel(){
+        const userAccess = await this.model.apiUserAccount.checkUserAccesRule(2,this.myAccount.id)
+        if(userAccess.status===200){
+            $("#adminPanelBtn").style.display = "block"
+            $("#adminPanelBtnMobile").style.display = "block"
+        }
     }
 
     async archiveList(listId){
@@ -162,6 +171,45 @@ class IndexController extends BaseController {
         }
 
     }
+
+    loadNavBar(){
+        $("#nav-bar").innerHTML =
+            `
+                <div class="nav-wrapper" style="background-color: darkred">
+                    <a onclick="navigate('index')" style="cursor: pointer; padding-left:10px; font-size: 1.5em" class="brand-logo">Liste de courses V2</a>
+                    <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a onclick="navigate('index')" style="cursor: pointer">Accueil</a></li>
+                        <li><a class="modal-trigger" href="#modalNewShopList" style="cursor: pointer">Nouvelle Liste</a></li>
+                        <li><a onclick="navigate('archives')" style="cursor: pointer">Archives</a></li>
+                        <li><a id="profileNav" class='dropdown-trigger' href='#' data-target='userProfileDropDown' style="cursor: pointer"></a></li>
+                        <li id="adminPanelBtn" style="display: none ;"><a onclick="navigate('adminpanel')" style="cursor: pointer">Panel Admin</a></li>
+                        <li><a onclick="sessionStorage.removeItem('token'); navigate('index')" style="cursor: pointer">Deconnexion</a></li>
+                    </ul>
+        
+                    <ul id='userProfileDropDown' class='dropdown-content'>
+                        <li><a onclick="navigate('myprofile')">Mon profile</a></li>
+                        <li><a onclick="navigate('partagedList')">Partagé avec moi</a></li>
+                    </ul>
+                </div>
+            `
+
+        $("#mobile").innerHTML =
+            `
+                <li><a onclick="navigate('index')" style="cursor: pointer">Accueil</a></li>
+                <li><a href="#modalNewShopList" class="modal-trigger" style="cursor: pointer">Nouvelle Liste</a></li>
+                <li><a onclick="navigate('archives')" style="cursor: pointer">Archives</a></li>
+                <li><a id="profileNavMobile" onclick="$('#sousMenuProfile').style.display ==='none' ? $('#sousMenuProfile').style.display = 'block' : $('#sousMenuProfile').style.display = 'none'" style="cursor: pointer"></a></li>
+                <ul id="sousMenuProfile" style="padding: 0 20px; display:none" >
+                    <li><a onclick="navigate('myprofile')">Mon profile</a></li>
+                    <li><a onclick="navigate('partagedList')">Partagé avec moi</a></li>
+                </ul>
+                <li id="adminPanelBtnMobile" style="display: none ;"><a onclick="navigate('adminpanel')" style="cursor: pointer">Panel Admin</a></li>
+                <li><a onclick="sessionStorage.removeItem('token'); navigate('index')" style="cursor: pointer">Deconnexion</a></li>
+            `
+    }
+
 }
 
 window.indexController = new IndexController()

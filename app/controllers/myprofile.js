@@ -14,7 +14,6 @@ class MyProfileController extends BaseFormController {
             <input id="infoEmail" value="${indexController.myAccount.login}" placeholder="Entrez votre e-mail" type="text" class="validate">
             <button class="btn" onclick="myprofileController.updateInfos()">Modifiez vos informations</button>
             <button class="btn" onclick="myprofileController.getModal('#modalUpdateMdp').open()">Modifiez votre mot de passe</button>
-        
         `
     }
 
