@@ -1,0 +1,22 @@
+<div class="container">
+    <h3 id="titleProfile"></h3>
+
+    <div id="myprofile"></div>
+</div>
+
+<!--    modalUpdateMdp-->
+<div id="modalUpdateMdp" class="modal">
+    <div class="modal-content">
+        <h4>Modification de votre mot de passe</h4>
+        <label for="prevMdp">Entrez votre précedent mot de passe</label>
+        <input id="prevMdp" placeholder="Entrez votre précedent mot de passe" type="password" class="validate">
+        <label for="newMdp">Entrez votre nouveau mot de passe</label>
+        <input id="newMdp" placeholder="Entrez votre nouveau mot de passe" type="password" class="validate">
+        <label for="confirmNewMdp">Confirmez votre nouveau mot de passe</label>
+        <input id="confirmNewMdp" placeholder="Confirmez votre nouveau mot de passe" type="password" class="validate">
+    </div>
+    <div class="modal-footer">
+        <button class="btn modal-close waves-effect waves-green " style="background-color: darkred">ANNULER</button>
+        <button class="waves-effect waves-green btn-flat" onclick="myprofileController.updatemdp()" id="btnForgotMdp">Modifier votre mot de passe</button>
+    </div>
+</div>

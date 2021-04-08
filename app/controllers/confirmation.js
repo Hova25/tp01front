@@ -26,11 +26,6 @@ class ConfirmationController extends BaseController {
             <button class="btn" onclick="confirmationController.reinitialisationMdp()">Re-initialiser le mot de passe</button>
             <button class="btn" onclick="window.location.replace('login.html')">Retourner à l'espace de connexion</button>
             `
-
-
-        // const user  = await this.model.apiUserAccount.getByPasswordCode($_GET("password_reset"))
-        // console.log(user)
-
     }
     reinitialisationMdp(){
         const newPassword = $("#newPassword").value
