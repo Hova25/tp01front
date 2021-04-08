@@ -46,6 +46,33 @@ class LoginController extends BaseFormController {
         this.toast(`L'e-mail de confirmation a bien été renvoyé à l'adresse ${login}`)
     }
 
+    async forgotmdp(){
+        const email = $("#mdpForgotEmail").value
+        let test = 0
+        if (!this.checkEmail(email)) {
+            this.toast("Attention vous n'avez pas entré un e-mail valide")
+            test++
+        }
+        if(test===0){
+            await this.service.checkLoginNoExist(email)
+                .then(async res => {
+                    if (res === 200) {
+                        this.toast("Attention l'e-mail entré n'existe pas")
+                    }else if (res===202){
+                        const user = await this.model.apiUserAccount.getByEmail(email)
+                         await this.model.apiMailer.reset_password(user)
+                        this.toast("Envoie de mail réinitialisation mot de passe")
+                        $("#mdpForgotEmail").value = ""
+                        this.getModal("#modalMDP").close()
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    this.displayServiceError()
+                })
+        }
+    }
+
     async inscription(){
         let inscriptionDisplayName = this.validateRequiredField("#inscriptionDisplayName",'Pseudo')
         let inscriptionEmail = this.validateRequiredField("#inscriptionEmail",'Adresse e-mail')
@@ -75,7 +102,7 @@ class LoginController extends BaseFormController {
                             $("#inscriptionPasswordVerif").value = ""
                             this.getModal("#modalInscription").close()
                         }
-                    } else if (res === 401) {
+                    } else if (res === 202) {
                         this.toast("Création de compte impossible l'e-mail existe deja")
                     } else {
                         this.displayServiceError()

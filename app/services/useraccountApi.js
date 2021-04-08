@@ -42,6 +42,15 @@ class UseraccountApi extends BaseApi {
             return undefined
         }
     }
+    getByPasswordCode(password_code){
+        try {
+            return fetchJSON(`${this.baseApiUrl}/get/password_code/${password_code}`)
+                .then(result => result)
+                .catch(_ => undefined)
+        }catch (e) {
+            return undefined
+        }
+    }
 
     signup(userAccount){
         let headers = new Headers()
@@ -67,7 +76,7 @@ class UseraccountApi extends BaseApi {
         }).then(res => {
             if (res.status === 200) {
                 resolve(res.status)
-            } else if(res.status === 401) {
+            } else if(res.status === 202) {
                 resolve(res.status)
             }else{
                 reject(res.status)
@@ -91,6 +100,21 @@ class UseraccountApi extends BaseApi {
         return await fetch(`${this.baseApiUrl}/update_confirmation_code/${login}`, {
             method: 'PATCH',
             headers: this.headers
+        })
+    }
+    async updatePasswordCode(login){
+        this.headers.set("Content-Type", 'application/json')
+        return await fetch(`${this.baseApiUrl}/update_password_code/${login}`, {
+            method: 'PATCH',
+            headers: this.headers
+        })
+    }
+    async updatePassword(password_code, password){
+        this.headers.set("Content-Type", 'application/json')
+        return await fetch(`${this.baseApiUrl}/update_password_with_password_code/${password_code}`, {
+            method: 'POST',
+            headers: this.headers,
+            body: JSON.stringify({"challenge": password})
         })
     }
 
