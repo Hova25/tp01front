@@ -27,6 +27,9 @@ class UseraccountApi extends BaseApi {
     getByAll() {
         return fetchJSON(`${this.baseApiUrl}`,this.token)
     }
+    getRolesByUserAccountId(useraccount_id) {
+        return fetchJSON(`${this.serviceBaseUrl}/role?useraccount_id=${useraccount_id}`,this.token)
+    }
     getByEmail(email){
         try {
             return fetchJSON(`${this.baseApiUrl}/get/email/${email}`, this.token)
@@ -96,6 +99,14 @@ class UseraccountApi extends BaseApi {
         return fetch(`${this.baseApiUrl}/update_validation/${confirmation_code}`, {
             method: 'PATCH',
             headers: this.headers
+        })
+    }
+    changeActive(id){
+        this.headers.set("Content-Type", 'application/json')
+        return fetch(`${this.baseApiUrl}/change_active`, {
+            method: 'PATCH',
+            headers: this.headers,
+            body: JSON.stringify({"id":id})
         })
     }
     async updateConfirmationCode(login){

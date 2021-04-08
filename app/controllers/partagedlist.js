@@ -77,43 +77,6 @@ class PartagedListController extends BaseController {
 
             this.getModal("#modalVuePartaged").open()
     }
-
-    // async justSeeList(listId){
-    //     const dataList = await this.model.getListById(listId)
-    //     const itemsList = await this.model.getAllItemList(dataList.id)
-    //     const date = dataList.date.toLocaleDateString()
-    //     $("#titlePartaged").innerText = ` ${dataList.toString()} - ${date}`
-    //     let archivedItemsContent = ""
-    //     if(itemsList.length>0){
-    //         archivedItemsContent =
-    //             `
-    //                 <thead>
-    //                     <th>Label</th>
-    //                     <th>Quantité</th>
-    //                 </thead>
-    //              `
-    //         for(const item of itemsList){
-    //             let styleLine = ""
-    //             if(item.checked === true){
-    //                 styleLine = "text-decoration: line-through"
-    //             }
-    //             archivedItemsContent +=
-    //                 `
-    //                 <tr>
-    //                     <td style="${styleLine}">${item.label}</td>
-    //                     <td style="${styleLine}">${item.quantity}</td>
-    //                 </tr>
-    //                 `
-    //         }
-    //
-    //     }else{
-    //         archivedItemsContent = "Il n'y a pas d'articles enregistré pour cette liste"
-    //     }
-    //
-    //     $("#archivedItems").innerHTML = archivedItemsContent
-    //
-    //     this.getModal("#modalVuePartaged").open()
-    // }
 }
 
 window.partageListController = new PartagedListController()

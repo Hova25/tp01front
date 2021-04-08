@@ -182,8 +182,9 @@ class IndexController extends BaseController {
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a onclick="navigate('index')" style="cursor: pointer">Accueil</a></li>
                         <li><a class="modal-trigger" href="#modalNewShopList" style="cursor: pointer">Nouvelle Liste</a></li>
+                        <li ><a onclick="navigate('partagedList')">Partagé avec moi</a></li>
                         <li><a onclick="navigate('archives')" style="cursor: pointer">Archives</a></li>
-                        <li><a id="profileNav" class='dropdown-trigger' href='#' data-target='userProfileDropDown' style="cursor: pointer"></a></li>
+                        <li class="light-blue accent-2" ><a id="profileNav" onclick="navigate('myprofile')">Mon profile</a></li>
                         <li id="adminPanelBtn" style="display: none ;"><a onclick="navigate('adminpanel')" style="cursor: pointer">Panel Admin</a></li>
                         <li><a onclick="sessionStorage.removeItem('token'); navigate('index')" style="cursor: pointer">Deconnexion</a></li>
                     </ul>

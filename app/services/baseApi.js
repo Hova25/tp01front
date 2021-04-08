@@ -1,6 +1,7 @@
 const serviceBaseUrl = "http://localhost:3333"
 class BaseApi {
     constructor(baseApiUrl) {
+        this.serviceBaseUrl = serviceBaseUrl
         this.baseApiUrl = `${serviceBaseUrl}/${baseApiUrl}`
         this.token = sessionStorage.getItem("token")
         this.headers = new Headers()
