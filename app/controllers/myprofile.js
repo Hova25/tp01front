@@ -48,8 +48,45 @@ class MyProfileController extends BaseFormController {
         $("#profileNavMobile").innerHTML = displayname
         $("#titleProfile").innerText = `Bienvenu sur votre profil ${displayname}`
     }
-    updatemdp(){
+    async updatePassword(){
+        const prevPassword = this.validateRequiredField("#prevPassword", "Précédent mot de passe")
+        const newPassword = this.validateRequiredField("#newPassword", "Nouveau mot de passe")
+        const confirmNewPassword = this.validateRequiredField("#confirmNewPassword", "Confirmation nouveau mot de passe")
+        let compteur = 0
+        if(prevPassword===null || newPassword===null || confirmNewPassword===null){ compteur++ }
 
+        if(newPassword!==confirmNewPassword && compteur===0){
+            this.toast("Attention vous n'avez pas entré le même nouveau mot de passe et confirmation mot de passe")
+            compteur++
+        }
+
+        if(compteur===0){
+            this.model.apiUserAccount.authenticate(indexController.myAccount.login, prevPassword)
+                .then(res => {
+                     this.model.apiUserAccount.updatePasswordAccount(indexController.myAccount.id, newPassword)
+                         .then(res => {
+                             if(res.status === 200){
+                                 this.toast("Votre mot de passe a bien été modifié")
+                                 $("#prevPassword").value = ""
+                                 $("#newPassword").value = ""
+                                 $("#confirmNewPassword").value = ""
+                                 this.getModal("#modalUpdateMdp").close()
+                             }
+                         })
+                         .catch(err=> {
+                             this.displayServiceError()
+                         })
+
+                })
+                .catch(err => {
+                    if(err===401){
+                        this.toast("Mauvais mot de passe")
+                    }else{
+                        this.displayServiceError()
+                    }
+                })
+
+        }
     }
 }
 window.myprofileController = new MyProfileController()

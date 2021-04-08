@@ -59,8 +59,9 @@ class LoginController extends BaseFormController {
                     if (res === 200) {
                         this.toast("Attention l'e-mail entré n'existe pas")
                     }else if (res===202){
+                        await this.model.apiUserAccount.updatePasswordCode(email)
                         const user = await this.model.apiUserAccount.getByEmail(email)
-                         await this.model.apiMailer.reset_password(user)
+                        await this.model.apiMailer.reset_password(user)
                         this.toast("Envoie de mail réinitialisation mot de passe")
                         $("#mdpForgotEmail").value = ""
                         this.getModal("#modalMDP").close()

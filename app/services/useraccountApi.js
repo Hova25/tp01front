@@ -117,6 +117,14 @@ class UseraccountApi extends BaseApi {
             body: JSON.stringify({"challenge": password})
         })
     }
+    async updatePasswordAccount(id, password){
+        this.headers.set("Content-Type", 'application/json')
+        return await fetch(`${this.baseApiUrl}/update_password`, {
+            method: 'PUT',
+            headers: this.headers,
+            body: JSON.stringify({"id":id,"challenge": password})
+        })
+    }
     async updateInfo(id, displayname, login){
         this.headers.set("Content-Type", 'application/json')
         return await fetch(`${this.baseApiUrl}/update_info`, {
