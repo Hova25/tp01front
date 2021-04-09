@@ -73,6 +73,9 @@ class AdminPanelController extends BaseController {
         await this.model.apiUserAccount.changeActive(userId)
         await this.loadUserAccountTable()
     }
+    loadTest(){
+        console.log('yolo')
+    }
 
     loadNavBarAdmin(){
         $("#nav-bar").innerHTML =

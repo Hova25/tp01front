@@ -1,6 +1,7 @@
 <div class="container">
     <h3>Admin PANEL</h3>
-
+    <label for="searchUser">Entrez l'e-mail d'un utilisateur à rechercher</label>
+    <input id="searchUser" onchange="adminPanelController.loadTest()" placeholder="Entrez l'e-mail d'un utilisateur à rechercher" type="text" class="validate">
     <table class="responsive-table highlight" id="tableUseraccount">
         <thead>
             <tr>
