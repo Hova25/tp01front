@@ -167,6 +167,14 @@ class UseraccountApi extends BaseApi {
             body: JSON.stringify({"id": id, "displayname":displayname, "login":login})
         })
     }
+    async updateInfoByAdmin(id, displayname, login){
+        this.headers.set("Content-Type", 'application/json')
+        return await fetch(`${this.baseApiUrl}/update_info?admin=true`, {
+            method: 'PUT',
+            headers: this.headers,
+            body: JSON.stringify({"id": id, "displayname":displayname, "login":login})
+        })
+    }
 
 
 

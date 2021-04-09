@@ -3,14 +3,12 @@ class AdminPanelController extends BaseController {
         super(true)
         this.loadNavBarAdmin()
         this.loadUserAccountTable()
+        this.userActu = undefined
     }
 
     async loadUserAccountTable(){
         let content = ""
-        let getAll = "await this.model.apiUserAccount.getAll()"
         const searchUser = $("#searchUser").value
-        // await this.model.apiUserAccount.getAllByLogin()
-        // await this.model.apiUserAccount.getAll()
         let allUserAccount = []
         if(searchUser=== ""){
             allUserAccount =  await this.model.apiUserAccount.getAll()
@@ -38,7 +36,7 @@ class AdminPanelController extends BaseController {
 
     async loadUpdateUserModal(userid){
         const user = await this.model.apiUserAccount.getById(userid)
-
+        this.userActu = user
         $("#contentUpdateUserByAdmin").innerHTML = `
             <h4>Modification du compte de ${user.displayname}</h4>
             <label for="infoDisplayName">Pseudo</label>
@@ -97,6 +95,18 @@ class AdminPanelController extends BaseController {
         }
         this.getModal('#modalUpdateUserByAdmin').open()
     }
+    async updateUserAccount(){
+        const displayname = $("#infoDisplayName").value
+        const login = $("#infoEmail").value
+        if(displayname!==""&&login!==""&&this.userActu!==undefined){
+            await this.model.apiUserAccount.updateInfoByAdmin(this.userActu.id, displayname,login)
+            await this.loadUpdateUserModal(this.userActu.id)
+            await this.loadUserAccountTable()
+        }else {
+            this.displayServiceError()
+        }
+    }
+
     async deleteRole(userId, roleId){
         await this.model.apiRole.deleteUserAccountHasRole(new UserAccountHasRole(roleId, userId))
         await this.loadUpdateUserModal(userId)
