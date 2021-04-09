@@ -5,6 +5,7 @@ class Model {
         this.apiUserAccount = new UseraccountApi()
         this.apiPartageList = new PartageListApi()
         this.apiMailer = new MailerAPI()
+        this.apiRole = new RoleApi()
     }
 
     async mailConfirmation(account){

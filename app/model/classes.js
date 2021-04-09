@@ -49,3 +49,10 @@ class PartageList {
         return "le partage de la liste"
     }
 }
+
+class UserAccountHasRole {
+    constructor(idRole,idUserAccount) {
+        this.idUserAccount = idUserAccount
+        this.idRole = idRole
+    }
+}

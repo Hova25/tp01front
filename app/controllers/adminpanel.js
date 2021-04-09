@@ -38,7 +38,7 @@ class AdminPanelController extends BaseController {
 
     async loadUpdateUserModal(userid){
         const user = await this.model.apiUserAccount.getById(userid)
-        console.log(user)
+
         $("#contentUpdateUserByAdmin").innerHTML = `
             <h4>Modification du compte de ${user.displayname}</h4>
             <label for="infoDisplayName">Pseudo</label>
@@ -47,10 +47,11 @@ class AdminPanelController extends BaseController {
             <input id="infoEmail" value="${user.login}" placeholder="Entrez un e-mail" type="text" class="validate">
             
             <ul id="roleCollection" class="collection"> </ul>
+            <div id="addRoles" class="input-field col s12">            
+            </div>
                         
         `
         const userAccountRoles = await this.model.apiUserAccount.getRolesByUserAccountId(user.id)
-        console.log(userAccountRoles)
         let roleContent = ""
         if(userAccountRoles.length===0){
             roleContent =
@@ -58,12 +59,67 @@ class AdminPanelController extends BaseController {
         }else{
             for(const role of userAccountRoles){
                 roleContent +=
-                `<li class="collection-item">${role.name} - ${role.description}</li> `
+                `<li class="collection-item">${role.name} - ${role.description} ${role.name==="Utilisateur" ? '' : `<button class="btn red darken-4 right" onclick="adminPanelController.deleteRole(${user.id}, ${role.id})"><i class="material-icons">delete</i></button>`}</li> `
 
             }
         }
         $("#roleCollection").innerHTML = roleContent
+        const allRoles = await this.model.apiRole.getAll()
+        let canTabRole = []
+        for(const allRole of allRoles){
+            let roleTmp = 0
+            for(const userRole of userAccountRoles){
+                if(allRole.id === userRole.id){
+                    roleTmp++
+                }
+            }
+            if(roleTmp===0){
+                canTabRole.push(allRole)
+            }
+        }
+        if(canTabRole.length>0){
+            let contentAddRoles =
+                `<select multiple id="selectRole">
+                    <option value="" disabled>Choisir un ou plusieurs role</option>
+                `
+            canTabRole.forEach(role => {
+                contentAddRoles += `<option value="${role.id}">${role.name}-${role.description}</option>`
+            })
+
+            contentAddRoles +=
+                `</select>
+                <label>Choix de roles à ajouter</label>
+                
+                <button onclick="adminPanelController.addRole(${user.id})" class="btn">Add Role</button>
+                `
+            document.getElementById("addRoles").innerHTML = contentAddRoles
+            M.FormSelect.init(document.getElementById("selectRole"));
+        }
         this.getModal('#modalUpdateUserByAdmin').open()
+    }
+    async deleteRole(userId, roleId){
+        await this.model.apiRole.deleteUserAccountHasRole(new UserAccountHasRole(roleId, userId))
+        await this.loadUpdateUserModal(userId)
+        this.toast("Le role a bien été levé")
+    }
+
+    async addRole(userId){
+        const options = $("#selectRole").options
+        if(options.length>1){
+            let selected = 0
+            for(let option of options){
+                if(option.selected===true){
+                    selected++
+                    await this.model.apiRole.insertUserAccountHasRole(new UserAccountHasRole(option.value,userId))
+                }
+            }
+            await this.loadUpdateUserModal(userId)
+            if(selected>0){
+                this.toast("Le role a bien été assigné")
+            }else{
+                this.toast("Vous n'avez pas ajouté de role")
+            }
+        }
     }
 
 
