@@ -7,12 +7,20 @@ class AdminPanelController extends BaseController {
 
     async loadUserAccountTable(){
         let content = ""
-        await this.model.apiUserAccount.getAll()
-            .then(async allUserAccount => {
-                for(const user of allUserAccount){
-                   // if(user.id === indexController.myAccount.id){ continue; } // choix de cacher l'utilisateur avec le quel ont est connecté
-                    content +=
-                        `
+        let getAll = "await this.model.apiUserAccount.getAll()"
+        const searchUser = $("#searchUser").value
+        // await this.model.apiUserAccount.getAllByLogin()
+        // await this.model.apiUserAccount.getAll()
+        let allUserAccount = []
+        if(searchUser=== ""){
+            allUserAccount =  await this.model.apiUserAccount.getAll()
+        }else {
+            allUserAccount = await this.model.apiUserAccount.getAllByLogin(searchUser)
+        }
+        for(const user of allUserAccount){
+            if(user.id === indexController.myAccount.id){ continue; } // choix de cacher l'utilisateur avec le quel ont est connecté
+            content +=
+                `
                             <tr>
                                 <td>${user.displayname}</td>
                                 <td>${user.login}</td>
@@ -24,9 +32,7 @@ class AdminPanelController extends BaseController {
                                 </td>
                             </tr>
                         `
-                }
-            })
-
+        }
         $("#userAccountTableBody").innerHTML = content
     }
 
@@ -73,8 +79,8 @@ class AdminPanelController extends BaseController {
         await this.model.apiUserAccount.changeActive(userId)
         await this.loadUserAccountTable()
     }
-    loadTest(){
-        console.log('yolo')
+    async loadTest(){
+        await this.loadUserAccountTable()
     }
 
     loadNavBarAdmin(){
