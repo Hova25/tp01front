@@ -142,6 +142,9 @@ class IndexController extends BaseController {
     }
 
     async loadNoArchivedList(){
+        await this.model.apiUserAccount.refreshToken()
+        //refreshtoken
+
         let content = "";
         try{
             const allListNoArchived = await this.model.getAllListNoArchived()

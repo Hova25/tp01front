@@ -10,7 +10,7 @@ class AdminPanelController extends BaseController {
         await this.model.apiUserAccount.getAll()
             .then(async allUserAccount => {
                 for(const user of allUserAccount){
-                    if(user.id === indexController.myAccount.id){ continue; } // choix de cacher l'utilisateur avec le quel ont est connecté
+                   // if(user.id === indexController.myAccount.id){ continue; } // choix de cacher l'utilisateur avec le quel ont est connecté
                     content +=
                         `
                             <tr>

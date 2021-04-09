@@ -17,6 +17,15 @@ class UseraccountApi extends BaseApi {
         }).catch(err => reject(err)))
     }
 
+    async refreshToken(){
+        fetchJSON(`${this.baseApiUrl}/refresh_token`, this.token)
+            .then(token => {
+                sessionStorage.setItem("token", `${token.token}` )
+                this.setHeaders()
+            })
+
+    }
+
     getMyAccount() {
         return fetchJSON(`${this.baseApiUrl}/myaccount`, this.token)
     }

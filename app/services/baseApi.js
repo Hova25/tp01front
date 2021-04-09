@@ -9,6 +9,13 @@ class BaseApi {
             this.headers.append("Authorization", `Bearer ${this.token}`)
         }
     }
+    setHeaders(){
+        this.token = sessionStorage.getItem("token")
+        this.headers = new Headers()
+        if (this.token !== undefined) {
+            this.headers.append("Authorization", `Bearer ${this.token}`)
+        }
+    }
 
     getAll() {
         return fetchJSON(this.baseApiUrl, this.token)
