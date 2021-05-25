@@ -1,11 +1,10 @@
 class BaseController {
     constructor(secured) {
-        if (secured) { this.checkAuthentication() }
+        this.model = new Model()
+        if (secured) { this.checkAuthentication();  this.loadAlert() }
         M.AutoInit();
         this.setBackButtonView('index')
-        this.model = new Model()
         this.alerts = undefined
-        this.loadAlert()
     }
     checkAuthentication() {
         if (sessionStorage.getItem("token") === null) {
@@ -20,8 +19,9 @@ class BaseController {
     async loadAlert(){
         this.alerts = await this.model.getMyAlertNoChecked()
         $("#alertNumber").innerText = this.alerts.length
-        if(this.alerts !== undefined) {
-            let alertContent = ""
+
+        let alertContent = ""
+        if(this.alerts !== undefined && this.alerts.length > 0) {
             for (const alert of this.alerts) {
                 console.log(alert)
                 const date = new Date(alert.date).toLocaleString()
@@ -34,8 +34,14 @@ class BaseController {
                 </li>
             `
             }
-            $("#alertContent").innerHTML = alertContent
+        }else {
+            alertContent += `
+                  <li class="collection-item">
+                    <span class="title">Vous n'avez pas de notification</span>
+                </li>
+            `
         }
+        $("#alertContent").innerHTML = alertContent
     }
 
     displayConfirmDelete(object, onclick) {
