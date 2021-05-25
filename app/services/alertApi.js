@@ -15,4 +15,13 @@ class AlertApi extends BaseApi {
         })
     }
 
+    async adminInsert(object) {
+        this.headers.set("Content-Type", 'application/json')
+        return await fetch(`${this.baseApiUrl}/admin/insert`, {
+            method: 'POST',
+            headers: this.headers,
+            body: JSON.stringify(object)
+        })
+    }
+
 }

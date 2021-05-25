@@ -5,7 +5,7 @@ class MyProfileController extends BaseFormController {
     }
 
     load(){
-        $("#titleProfile").innerText = `Bienvenu sur votre profil ${indexController.myAccount.displayname}`
+        $("#titleProfile").innerText = `Bienvenue sur votre profil ${indexController.myAccount.displayname}`
 
         $("#myprofile").innerHTML = `
             <label for="infoDisplayName">Votre pseudo</label>
@@ -45,7 +45,7 @@ class MyProfileController extends BaseFormController {
     modifDisplayName(displayname){
         $("#profileNav").innerHTML = displayname
         $("#profileNavMobile").innerHTML = displayname
-        $("#titleProfile").innerText = `Bienvenu sur votre profil ${displayname}`
+        $("#titleProfile").innerText = `Bienvenue sur votre profil ${displayname}`
     }
     async updatePassword(){
         const prevPassword = this.validateRequiredField("#prevPassword", "Précédent mot de passe")

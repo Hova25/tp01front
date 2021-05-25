@@ -1,4 +1,5 @@
 body {
+    cursor: context-menu;
     margin: 10px;
 }
 .fixedBottomRightBtn{

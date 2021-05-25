@@ -4,18 +4,18 @@ class AdminPanelController extends BaseController {
         this.loadNavBarAdmin()
         this.loadUserAccountTable()
         this.userActu = undefined
+        this.allUserAccount = undefined
     }
 
     async loadUserAccountTable(){
         let content = ""
         const searchUser = $("#searchUser").value
-        let allUserAccount = []
         if(searchUser=== ""){
-            allUserAccount =  await this.model.apiUserAccount.getAll()
+            this.allUserAccount =  await this.model.apiUserAccount.getAll()
         }else {
-            allUserAccount = await this.model.apiUserAccount.getAllByLogin(searchUser)
+            this.allUserAccount = await this.model.apiUserAccount.getAllByLogin(searchUser)
         }
-        for(const user of allUserAccount){
+        for(const user of this.allUserAccount){
             if(user.id === indexController.myAccount.id){ continue; } // choix de cacher l'utilisateur avec le quel ont est connecté
             content +=
                 `
@@ -27,11 +27,47 @@ class AdminPanelController extends BaseController {
                             <button class="btn" onclick="adminPanelController.changeActive(${user.id})" title="${user.active===true ? 'Désactiver compte' :'Activer compte'}">${user.active===true ? '<i class="material-icons">close</i>' : '<i class="material-icons">done</i>' }</button>
                             <button class="btn" onclick="adminPanelController.loadUpdateUserModal(${user.id})" title="modifier utilisateur: ${user.displayname}"> <i class="material-icons">edit</i></button>
                             <button class="btn" onclick="adminPanelController.resetPasswordMail('${user.login}')" title="Envoie mail réinitialisation mot de passe"><i class="material-icons">email</i></button>
+                            <button class="btn  light-blue" onclick="adminPanelController.loadSendAlertModal('${user.id}')" title="Envoyer une notification"><i class="material-icons">notifications</i></button>
                         </td>
                     </tr>
                 `
         }
         $("#userAccountTableBody").innerHTML = content
+    }
+
+    async loadSendAlertModal(userid){
+        if(userid !== undefined){
+            const user = await this.model.apiUserAccount.getById(userid)
+            this.userActu = user
+            $('#sendAlert_userNameArea').innerText = user.displayname
+        }else{
+            $('#sendAlert_userNameArea').innerText = " tous"
+        }
+        this.getModal('#modalSendAlertByAdmin').open()
+    }
+    async sendAlert(){
+        const title = $("#sendAlert_title").value
+        const text = $("#sendAlert_text").value
+        if(title === ""){
+            this.toast("Attention le titre de la notification est obligatoire")
+        }
+        if(text === ""){
+            this.toast("Attention le texte de la notification est obligatoire")
+        }
+        if(text !== "" && title!== ""){
+            if(this.userActu !== undefined){
+                await this.model.apiAlert.adminInsert(new Alert(this.userActu.id, title, text))
+            }else if(this.allUserAccount.length>0) {
+                for(const user of this.allUserAccount){
+                    if(user.id === indexController.myAccount.id){ continue; } // choix de cacher l'utilisateur avec le quel ont est connecté
+                    await this.model.apiAlert.adminInsert(new Alert(user.id, title, text))
+                }
+            }
+            this.toast(`La notification : ${title} a bien été envoyé`)
+            $("#sendAlert_title").value = ""
+            $("#sendAlert_text").value = ""
+            this.getModal('#modalSendAlertByAdmin').close()
+        }
     }
 
     async loadUpdateUserModal(userid){

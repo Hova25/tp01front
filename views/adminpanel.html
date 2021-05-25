@@ -1,7 +1,7 @@
 <div class="container">
-    <h3>Admin PANEL</h3>
+    <h3>Admin PANEL <button class="btn red" onclick="adminPanelController.loadSendAlertModal()">Envoyer notification à tous</button></h3>
     <label for="searchUser">Entrez l'e-mail d'un utilisateur à rechercher</label>
-    <input id="searchUser" onchange="adminPanelController.loadTest()" placeholder="Entrez l'e-mail d'un utilisateur à rechercher" type="text" class="validate">
+    <input id="searchUser" onkeyup="adminPanelController.loadTest()" placeholder="Entrez l'e-mail d'un utilisateur à rechercher" type="text" class="validate">
     <table class="responsive-table highlight" id="tableUseraccount">
         <thead>
             <tr>
@@ -25,5 +25,24 @@
     <div class="modal-footer">
         <button class="btn modal-close waves-effect waves-green " style="background-color: darkred">ANNULER</button>
         <button class="waves-effect waves-green btn-flat" onclick="adminPanelController.updateUserAccount()">Modifier compte</button>
+    </div>
+</div>
+<!--    modalSendAlertByAdmin-->
+<div id="modalSendAlertByAdmin" class="modal">
+    <div class="modal-content">
+        <h4>Envoyez une notification à <span id="sendAlert_userNameArea"></span></h4></br>
+
+        <div class="input-field col s12">
+            <input id="sendAlert_title" type="text" class="validate">
+            <label for="sendAlert_title">Titre de la notification</label>
+        </div>
+        <div class="input-field col s12">
+            <input id="sendAlert_text" type="text" class="validate">
+            <label for="sendAlert_text">Texte de la notification</label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn modal-close waves-effect waves-green " style="background-color: darkred">ANNULER</button>
+        <button class="waves-effect waves-green btn-flat" onclick="adminPanelController.sendAlert()">Envoyer la notification</button>
     </div>
 </div>
