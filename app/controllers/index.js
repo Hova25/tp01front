@@ -7,7 +7,6 @@ class IndexController extends BaseController {
         this.loadNoArchivedList()
         this.selectedList = undefined
         this.partagedList = false
-        this.loadAlert()
     }
     handleDisplayAlertClick() {
         let alertPanel = $("#alertPanel")

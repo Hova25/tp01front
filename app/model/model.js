@@ -132,4 +132,20 @@ class Model {
     noArchiveList(idList){
         return this.apiList.noArchiveList(idList).then(res => res.status)
     }
+
+
+    changeCheckAlert(idAlert) {
+        return this.apiAlert.changeCheck(idAlert).then(res => res.status)
+    }
+
+    async getMyAlertNoChecked(){
+        try {
+            return await this.apiAlert.getMyAlertNoChecked()
+        } catch (e) {
+            if (e === 404) return null
+            return undefined
+        }
+    }
+
+
 }

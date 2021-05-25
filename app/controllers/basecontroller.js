@@ -5,26 +5,29 @@ class BaseController {
         this.setBackButtonView('index')
         this.model = new Model()
         this.alerts = undefined
+        this.loadAlert()
     }
     checkAuthentication() {
         if (sessionStorage.getItem("token") === null) {
             window.location.replace("login.html")
         }
     }
-    async handleClickCheckAlert(){
-        console.log('tlkrlkl')
+    async handleClickCheckAlert(alertId, alertTitle){
+        await this.model.changeCheckAlert(alertId)
+        await this.loadAlert()
+        this.toast(`La notification : ${alertTitle} a bien été visualisé `)
     }
     async loadAlert(){
-        this.alerts = await this.model.apiAlert.getMyAlertNoChecked()
-        console.log(this.alerts,this.alerts.length)
+        this.alerts = await this.model.getMyAlertNoChecked()
         $("#alertNumber").innerText = this.alerts.length
         if(this.alerts !== undefined) {
             let alertContent = ""
             for (const alert of this.alerts) {
+                console.log(alert)
                 const date = new Date(alert.date).toLocaleString()
                 alertContent += `
                   <li class="collection-item">
-                    <span class="title">${alert.title} <i onclick="indexController.handleClickCheckAlert()" class="material-icons cursor_pointer" style="float: right;">close</i></span>
+                    <span class="title">${alert.title} <i onclick="indexController.handleClickCheckAlert(${alert.id}, '${alert.title}')" class="material-icons cursor_pointer" style="float: right;">close</i></span>
                     <p>${alert.text} <br>
                         ${date}
                     </p>
