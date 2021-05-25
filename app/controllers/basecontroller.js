@@ -4,12 +4,37 @@ class BaseController {
         M.AutoInit();
         this.setBackButtonView('index')
         this.model = new Model()
+        this.alerts = undefined
     }
     checkAuthentication() {
         if (sessionStorage.getItem("token") === null) {
             window.location.replace("login.html")
         }
     }
+    async handleClickCheckAlert(){
+        console.log('tlkrlkl')
+    }
+    async loadAlert(){
+        this.alerts = await this.model.apiAlert.getMyAlertNoChecked()
+        console.log(this.alerts,this.alerts.length)
+        $("#alertNumber").innerText = this.alerts.length
+        if(this.alerts !== undefined) {
+            let alertContent = ""
+            for (const alert of this.alerts) {
+                const date = new Date(alert.date).toLocaleString()
+                alertContent += `
+                  <li class="collection-item">
+                    <span class="title">${alert.title} <i onclick="indexController.handleClickCheckAlert()" class="material-icons cursor_pointer" style="float: right;">close</i></span>
+                    <p>${alert.text} <br>
+                        ${date}
+                    </p>
+                </li>
+            `
+            }
+            $("#alertContent").innerHTML = alertContent
+        }
+    }
+
     displayConfirmDelete(object, onclick) {
         if (object === undefined) {
             this.displayServiceError()

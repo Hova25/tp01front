@@ -7,6 +7,15 @@ class IndexController extends BaseController {
         this.loadNoArchivedList()
         this.selectedList = undefined
         this.partagedList = false
+        this.loadAlert()
+    }
+    handleDisplayAlertClick() {
+        let alertPanel = $("#alertPanel")
+        if(alertPanel.style.display === "none"){
+            alertPanel.style.display = 'block'
+        }else{
+            alertPanel.style.display = 'none'
+        }
     }
 
     async loadUserPanel(){

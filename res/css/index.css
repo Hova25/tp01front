@@ -1,3 +1,31 @@
 body {
     margin: 10px;
 }
+.fixedBottomRightBtn{
+    position: fixed;
+    right: 23px;
+    bottom: 23px;
+    padding-top: 15px;
+    margin-bottom: 0;
+    z-index: 997;
+}
+
+#alertPanel{
+    width: 250px;
+    position: fixed;
+    z-index: 997;
+    right: 10px;
+    bottom: 80px;
+    display: none;
+}
+#alertNumber{
+    font-size:32px
+}
+
+/* cursor */
+.cursor_contextMenu{
+    cursor: context-menu;
+}
+.cursor_pointer{
+    cursor: pointer;
+}

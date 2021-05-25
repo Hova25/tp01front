@@ -19,17 +19,17 @@ class AdminPanelController extends BaseController {
             if(user.id === indexController.myAccount.id){ continue; } // choix de cacher l'utilisateur avec le quel ont est connecté
             content +=
                 `
-                            <tr>
-                                <td>${user.displayname}</td>
-                                <td>${user.login}</td>
-                                <td>${user.active===true ? "Active" : "Inactif" }</td>
-                                <td>
-                                    <button class="btn" onclick="adminPanelController.changeActive(${user.id})" title="${user.active===true ? 'Activer compte' :'Désactiver compte'}">${user.active===true ? '<i class="material-icons">close</i>' : '<i class="material-icons">done</i>' }</button>
-                                    <button class="btn" onclick="adminPanelController.loadUpdateUserModal(${user.id})" title="modifier utilisateur: ${user.displayname}"> <i class="material-icons">edit</i></button>
-                                    <button class="btn" onclick="adminPanelController.resetPasswordMail('${user.login}')" title="Envoie mail réinitialisation mot de passe"><i class="material-icons">email</i></button>
-                                </td>
-                            </tr>
-                        `
+                    <tr>
+                        <td>${user.displayname}</td>
+                        <td>${user.login}</td>
+                        <td>${user.active===true ? "Active" : "Inactif" }</td>
+                        <td>
+                            <button class="btn" onclick="adminPanelController.changeActive(${user.id})" title="${user.active===true ? 'Désactiver compte' :'Activer compte'}">${user.active===true ? '<i class="material-icons">close</i>' : '<i class="material-icons">done</i>' }</button>
+                            <button class="btn" onclick="adminPanelController.loadUpdateUserModal(${user.id})" title="modifier utilisateur: ${user.displayname}"> <i class="material-icons">edit</i></button>
+                            <button class="btn" onclick="adminPanelController.resetPasswordMail('${user.login}')" title="Envoie mail réinitialisation mot de passe"><i class="material-icons">email</i></button>
+                        </td>
+                    </tr>
+                `
         }
         $("#userAccountTableBody").innerHTML = content
     }
