@@ -8,14 +8,6 @@ class IndexController extends BaseController {
         this.selectedList = undefined
         this.partagedList = false
     }
-    handleDisplayAlertClick() {
-        let alertPanel = $("#alertPanel")
-        if(alertPanel.style.display === "none"){
-            alertPanel.style.display = 'block'
-        }else{
-            alertPanel.style.display = 'none'
-        }
-    }
 
     async loadUserPanel(){
         this.myAccount = await this.model.apiUserAccount.getMyAccount()
@@ -156,6 +148,7 @@ class IndexController extends BaseController {
         let content = "";
         try{
             const allListNoArchived = await this.model.getAllListNoArchived()
+            await this.loadAlert()
             if(allListNoArchived.length>0) {
                 for (const list of allListNoArchived) {
                     const date = list.date.toLocaleDateString()
