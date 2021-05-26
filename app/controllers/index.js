@@ -242,7 +242,7 @@ class IndexController extends BaseController {
     loadNavBar(){
         $("#nav-bar").innerHTML =
             `
-                <div class="nav-wrapper" style="background-color: darkred">
+                <div class="nav-wrapper light-green accent-4">
                     <a onclick="navigate('index')" style="cursor: pointer; padding-left:10px; font-size: 1.5em" class="brand-logo">Liste de courses V2</a>
                     <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         
