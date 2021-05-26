@@ -7,6 +7,7 @@ class IndexController extends BaseController {
         this.loadNoArchivedList()
         this.selectedList = undefined
         this.partagedList = false
+        this.allListNoArchived = []
     }
 
     async saveSubscription(){
@@ -37,6 +38,7 @@ class IndexController extends BaseController {
                         this.toast("Votre abonnement a bien été pris en compte !")
                         $("#bannierToVip").style.display = "none"
                         this.loadAlert()
+                        this.loadUserPanel()
                     }
                 })
                 .catch(err => {
@@ -54,6 +56,10 @@ class IndexController extends BaseController {
         this.vipRole = await this.model.apiUserAccount.getRolesByUserAccountId(this.myAccount.id, 3)
         if(this.vipRole.length>0){
             $('#bannierToVip').style.display = 'none'
+            this.myAccount.subscriber = 1
+        }else {
+            $('#bannierToVip').style.display = 'block'
+            this.myAccount.subscriber = 0
         }
         $("#profileNav").innerHTML = this.myAccount.displayname
         $("#profileNavMobile").innerHTML = this.myAccount.displayname
@@ -153,35 +159,40 @@ class IndexController extends BaseController {
     }
 
     async saveNewList(){
-        const shop = $("#newShopListName").value
-        const date = $("#newShopListDate").value
-        let today = new Date();
-        let dateJmoin1 = new Date();
-        dateJmoin1.setDate(today.getDate()-1);
+        if(this.myAccount.subscriber === 0 && this.allListNoArchived.length >= 1 ) {
+            this.toast("Abonnez vous pour avoir plus d'une liste active sinon archivez ou supprimez la")
+        }else{
+            const shop = $("#newShopListName").value
+            const date = $("#newShopListDate").value
+            let today = new Date();
+            let dateJmoin1 = new Date();
+            dateJmoin1.setDate(today.getDate() - 1);
 
-        const dateJmoin1Compare = dateJmoin1.toISOString()
-        if(shop ===""){
-            this.toast("Veuillez insérer un nom de magasin")
-        }
-        if(date ===""){
-            this.toast("Veuillez insérer une date")
-        }
-        if(date<dateJmoin1Compare){
-            this.toast(`Veuillez insérer une date après le ${dateJmoin1.toLocaleDateString()}`)
-            return
-        }
-        if(shop !=="" && date!==""){
-            const newListProps = {
-                "shop": shop,
-                "date": date,
-                "archived":false
+            const dateJmoin1Compare = dateJmoin1.toISOString()
+            if (shop === "") {
+                this.toast("Veuillez insérer un nom de magasin")
             }
-            this.getModal("#modalNewShopList").close()
-            const idList = await this.model.insertList(newListProps)
-            this.selectedList = await this.model.getListById(idList)
-            $("#newShopListName").value = ""
-            $("#newShopListDate").value = ""
-            navigate("shoplist")
+            if (date === "") {
+                this.toast("Veuillez insérer une date")
+            }
+            if (date < dateJmoin1Compare) {
+                this.toast(`Veuillez insérer une date après le ${dateJmoin1.toLocaleDateString()}`)
+                return
+            }
+            if (shop !== "" && date !== "") {
+                const newListProps = {
+                    "shop": shop,
+                    "date": date,
+                    "archived": false
+                }
+                this.getModal("#modalNewShopList").close()
+                const idList = await this.model.insertList(newListProps)
+                this.selectedList = await this.model.getListById(idList)
+                $("#newShopListName").value = ""
+                $("#newShopListDate").value = ""
+                this.loadNoArchivedList()
+                navigate("shoplist")
+            }
         }
     }
 
@@ -191,10 +202,10 @@ class IndexController extends BaseController {
 
         let content = "";
         try{
-            const allListNoArchived = await this.model.getAllListNoArchived()
+            this.allListNoArchived = await this.model.getAllListNoArchived()
             await this.loadAlert()
-            if(allListNoArchived.length>0) {
-                for (const list of allListNoArchived) {
+            if(this.allListNoArchived.length>0) {
+                for (const list of this.allListNoArchived) {
                     let today = new Date();
                     let dateJmoin7 = new Date();
                     dateJmoin7.setDate(today.getDate()-7)

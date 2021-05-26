@@ -126,6 +126,13 @@ class ShoplistController extends BaseFormController {
         return await this.model.deletePartageList(idPartageList)
     }
 
+    displayModalPartagedList() {
+        if (indexController.myAccount.subscriber === 1) {
+            this.getModal("#modalPartagedList").open()
+        }else{
+            this.toast("Abonnez vous pour pouvoir partager votre liste")
+        }
+    }
     async loadData(){
         if(this.selectedList!==undefined){
             $("#titleShopList").innerText = "Modification d'une liste"

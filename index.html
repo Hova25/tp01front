@@ -17,7 +17,7 @@
     <ul class="sidenav" id="mobile">
     </ul>
 
-    <div id="bannierToVip" class="container light-green accent-4 white-text" style="padding: 10px;">
+    <div id="bannierToVip" class="container light-green accent-4 white-text" style="display: none;padding: 10px;">
         <p><strong>Vous n'êtes pas encore abonné pensez à le faire afin d'accéder à toute l'application !</strong> <button data-target="modalSubscription" style="float: right" class="btn  modal-trigger">S'abonner !</button></p>
     </div>
     <div id="content"></div>
@@ -41,12 +41,12 @@
         <p>Merci d'entrer vos coordonnées bancaire ci-dessous!</p>
         <div class="input-field" style="width: 95%">
             <i class="material-icons prefix">credit_card</i>
-            <input id="paymentNumber" type="text" class="validate">
+            <input id="paymentNumber" maxlength="12" type="text" class="validate">
             <label for="paymentNumber">Entrez vos numero de carte</label>
         </div>
         <div class="input-field" style="width: 95%">
             <i class="material-icons prefix">lock</i>
-            <input id="paymentCvs" type="text" class="validate">
+            <input id="paymentCvs" maxlength="3" type="text" class="validate">
             <label for="paymentCvs">Entrez votre cryptograme</label>
         </div>
         <div class="input-field" style="width: 95%">
