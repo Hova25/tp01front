@@ -151,10 +151,18 @@ class IndexController extends BaseController {
             await this.loadAlert()
             if(allListNoArchived.length>0) {
                 for (const list of allListNoArchived) {
+                    let today = new Date();
+                    let dateJmoin7 = new Date();
+                    dateJmoin7.setDate(today.getDate()-7)
                     const date = list.date.toLocaleDateString()
+
+                    let cardColor = "blue darken-2"
+                    if(date < dateJmoin7.toLocaleDateString()){
+                        cardColor = "indigo darken-2"
+                    }
                     content += `
                     <div class="col s12 m4">
-                        <div class="card blue-grey darken-1">
+                        <div class="card ${cardColor} darken-1">
                             <div class="card-content white-text">
                                 <span class="card-title">${list} - ${date}</span>
                                 <button class="btn" onclick="indexController.seeList(${list.id})" >Voir</button>
