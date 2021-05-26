@@ -19,17 +19,16 @@
 
     <div id="content"></div>
 
-    <div class="fixedBottomRightBtn"
-
-         onmouseenter="$('#alertPanel').style.display = 'block'" onmouseleave="$('#alertPanel').style.display = 'none'" >
-        <a onclick="indexController.handleDisplayAlertClick()" class="btn-floating btn-large red">
+    <div class="fixedBottomRightBtn"      >
+        <a href="#" data-target="side-alert" class="sidenav-trigger btn-floating btn-large red" >
             <span><span id="alertNumber">0</span><i class="large material-icons">notifications</i></span>
         </a>
-        <div id="alertPanel" class="cursor_contextMenu">
-            <ul class="collection" id="alertContent" >
 
-            </ul>
-        </div>
+    </div>
+<!--    right-aligned-->
+    <div class="sidenav " id="side-alert">
+        <ul class="collection" id="alertContent" >
+        </ul>
     </div>
 
 <!--    modaldelete-->
@@ -86,7 +85,6 @@
             <button class="btn modal-close waves-effect waves-green " style="background-color: darkred">FERMER</button>
         </div>
     </div>
-
 
     <script type="application/ecmascript" src="app/tools.js"></script>
     <script type="application/ecmascript" src="app/model/classes.js"></script>

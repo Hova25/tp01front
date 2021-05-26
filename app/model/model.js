@@ -138,6 +138,14 @@ class Model {
         return this.apiAlert.changeCheck(idAlert).then(res => res.status)
     }
 
+    // async getMyAlertNoChecked(){
+    //     try {
+    //         return await this.apiAlert.getMyAlertNoChecked()
+    //     } catch (e) {
+    //         if (e === 404) return null
+    //         return undefined
+    //     }
+    // }
     async getMyAlertNoChecked(){
         try {
             return await this.apiAlert.getMyAlertNoChecked()

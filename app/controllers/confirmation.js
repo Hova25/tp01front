@@ -15,7 +15,6 @@ class ConfirmationController extends BaseController {
         }
     }
     loadNewPassword(){
-        console.log("newPassword")
         $("#confirmationContainer").innerHTML = `
             <h2>Reinitialisatrion de votre mot de passse MyShopList !</h2>
 

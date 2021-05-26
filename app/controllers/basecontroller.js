@@ -4,7 +4,6 @@ class BaseController {
         if (secured) { this.checkAuthentication();  this.loadAlert() }
         M.AutoInit();
         this.setBackButtonView('index')
-        this.alerts = undefined
     }
     checkAuthentication() {
         if (sessionStorage.getItem("token") === null) {
@@ -17,13 +16,12 @@ class BaseController {
         this.toast(`La notification : ${alertTitle} a bien été visualisé `)
     }
     async loadAlert(){
-        this.alerts = await this.model.getMyAlertNoChecked()
-        $("#alertNumber").innerText = this.alerts.length
+        let alerts = await this.model.getMyAlertNoChecked()
+        $("#alertNumber").innerText = alerts.length
 
         let alertContent = ""
-        if(this.alerts !== undefined && this.alerts.length > 0) {
-            for (const alert of this.alerts) {
-                console.log(alert)
+        if(alerts !== undefined && alerts.length > 0) {
+            for (const alert of alerts) {
                 const date = new Date(alert.date).toLocaleString()
                 alertContent += `
                   <li class="collection-item">
