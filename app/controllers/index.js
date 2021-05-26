@@ -9,8 +9,52 @@ class IndexController extends BaseController {
         this.partagedList = false
     }
 
+    async saveSubscription(){
+        let paymentNumber = $("#paymentNumber").value
+        let paymentCvs = $("#paymentCvs").value
+        let paymentExpiration = $("#paymentExpiration").value
+        let errorCount = 0
+        if(paymentNumber === ''){
+            this.toast("Le numéro de votre carte bleu est obligatoire pour s'abonner")
+            errorCount++
+        }
+        if(paymentCvs === ''){
+            this.toast("Le cryptogram de votre carte bleu est obligatoire pour s'abonner")
+            errorCount++
+        }
+        if(paymentExpiration === ''){
+            this.toast("Le numéro de votre carte bleu est obligatoire pour s'abonner")
+            errorCount++
+        }
+        if(errorCount===0){
+            await this.model.apiPayment.insert(new Payment(this.myAccount.id, paymentNumber, paymentCvs, paymentExpiration, '4.9'))
+                .then(async res => {
+                    if (res.status === 200) {
+                        $("#paymentNumber").value = ""
+                        $("#paymentCvs").value = ""
+                        $("#paymentExpiration").value = ""
+                        this.getModal("#modalSubscription").close()
+                        this.toast("Votre abonnement a bien été pris en compte !")
+                        $("#bannierToVip").style.display = "none"
+                        this.loadAlert()
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    this.displayServiceError()
+                })
+
+        }
+
+    }
+
+
     async loadUserPanel(){
         this.myAccount = await this.model.apiUserAccount.getMyAccount()
+        this.vipRole = await this.model.apiUserAccount.getRolesByUserAccountId(this.myAccount.id, 3)
+        if(this.vipRole.length>0){
+            $('#bannierToVip').style.display = 'none'
+        }
         $("#profileNav").innerHTML = this.myAccount.displayname
         $("#profileNavMobile").innerHTML = this.myAccount.displayname
         await this.loadAdminPanel()

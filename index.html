@@ -17,19 +17,51 @@
     <ul class="sidenav" id="mobile">
     </ul>
 
+    <div id="bannierToVip" class="container light-green accent-4 white-text" style="padding: 10px;">
+        <p><strong>Vous n'êtes pas encore abonné pensez à le faire afin d'accéder à toute l'application !</strong> <button data-target="modalSubscription" style="float: right" class="btn  modal-trigger">S'abonner !</button></p>
+    </div>
     <div id="content"></div>
 
     <div class="fixedBottomRightBtn"      >
         <a href="#" data-target="side-alert" class="sidenav-trigger btn-floating btn-large red" >
             <span><span id="alertNumber">0</span><i class="large material-icons">notifications</i></span>
-        </a>
 
+        </a>
     </div>
 <!--    right-aligned-->
     <div class="sidenav " id="side-alert">
         <ul class="collection" id="alertContent" >
         </ul>
     </div>
+
+<!--    modalsubscription-->
+<div id="modalSubscription" class="modal">
+    <div class="modal-content">
+        <h4>Abonnez-vous dès à présent pour <strong>4,90€</strong> ! </h4>
+        <p>Merci d'entrer vos coordonnées bancaire ci-dessous!</p>
+        <div class="input-field" style="width: 95%">
+            <i class="material-icons prefix">credit_card</i>
+            <input id="paymentNumber" type="text" class="validate">
+            <label for="paymentNumber">Entrez vos numero de carte</label>
+        </div>
+        <div class="input-field" style="width: 95%">
+            <i class="material-icons prefix">lock</i>
+            <input id="paymentCvs" type="text" class="validate">
+            <label for="paymentCvs">Entrez votre cryptograme</label>
+        </div>
+        <div class="input-field" style="width: 95%">
+            <i class="material-icons prefix">date_range</i>
+            <input id="paymentExpiration" onkeyup="" placeholder="mm/yy" maxlength="5" type="text" class="validate">
+            <label for="paymentExpiration">Entrez la date d'expiration</label>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn modal-close waves-effect waves-green " style="background-color: darkred">NON</button>
+        <button class="modal-close waves-effect waves-green btn-flat" onclick="indexController.saveSubscription()" id="btnSubscription">OUI</button>
+    </div>
+</div>
+
 
 <!--    modaldelete-->
     <div id="modalConfirmDelete" class="modal">
@@ -97,6 +129,7 @@
     <script type="application/ecmascript" src="app/services/mailerApi.js"></script>
     <script type="application/ecmascript" src="app/services/roleApi.js"></script>
     <script type="application/ecmascript" src="app/services/alertApi.js"></script>
+    <script type="application/ecmascript" src="app/services/paymentApi.js"></script>
     <script type="application/ecmascript" src="app/controllers/basecontroller.js"></script>
     <script type="application/ecmascript" src="app/controllers/baseformcontroller.js"></script>
     <script>navigate("index")</script>

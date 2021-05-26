@@ -7,6 +7,7 @@ class Model {
         this.apiMailer = new MailerAPI()
         this.apiRole = new RoleApi()
         this.apiAlert = new AlertApi()
+        this.apiPayment = new PaymentApi()
     }
 
     async mailConfirmation(account){
@@ -141,14 +142,6 @@ class Model {
         return this.apiAlert.changeCheck(idAlert).then(res => res.status)
     }
 
-    // async getMyAlertNoChecked(){
-    //     try {
-    //         return await this.apiAlert.getMyAlertNoChecked()
-    //     } catch (e) {
-    //         if (e === 404) return null
-    //         return undefined
-    //     }
-    // }
     async getMyAlertNoChecked(){
         try {
             return await this.apiAlert.getMyAlertNoChecked()
@@ -157,6 +150,9 @@ class Model {
             return undefined
         }
     }
-
+    insertPayment(payment) {
+        console.log(payment)
+        return this.apiPayment.insert(payment).then(res => res.json())
+    }
 
 }
