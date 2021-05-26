@@ -39,8 +39,13 @@ class UseraccountApi extends BaseApi {
     getAllByLogin(login) {
         return fetchJSON(`${this.baseApiUrl}/searchbylogin/${login}`,this.token)
     }
-    getRolesByUserAccountId(useraccount_id) {
-        return fetchJSON(`${this.serviceBaseUrl}/role?useraccount_id=${useraccount_id}`,this.token)
+    getRolesByUserAccountId(useraccount_id, role_id) {
+        if(role_id!==undefined){
+            role_id = `&role_id=${role_id}`
+        }else{
+            role_id = ""
+        }
+        return fetchJSON(`${this.serviceBaseUrl}/role?useraccount_id=${useraccount_id}${role_id}`,this.token)
     }
     getByEmail(email){
         try {

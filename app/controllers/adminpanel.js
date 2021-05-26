@@ -17,12 +17,13 @@ class AdminPanelController extends BaseController {
         }
         for(const user of this.allUserAccount){
             if(user.id === indexController.myAccount.id){ continue; } // choix de cacher l'utilisateur avec le quel ont est connecté
+            const userAccountRoles = await this.model.apiUserAccount.getRolesByUserAccountId(user.id, 3)
             content +=
                 `
                     <tr>
                         <td>${user.displayname}</td>
                         <td>${user.login}</td>
-                        <td>${user.active===true ? "Active" : "Inactif" }</td>
+                        <td>${user.active===true ? "Active" : "Inactif" }  ${userAccountRoles.length > 0 ? '<i class="material-icons" title="Utilisateur abonné">star</i>': ''}</td>
                         <td>
                             <button class="btn" onclick="adminPanelController.changeActive(${user.id})" title="${user.active===true ? 'Désactiver compte' :'Activer compte'}">${user.active===true ? '<i class="material-icons">close</i>' : '<i class="material-icons">done</i>' }</button>
                             <button class="btn" onclick="adminPanelController.loadUpdateUserModal(${user.id})" title="modifier utilisateur: ${user.displayname}"> <i class="material-icons">edit</i></button>
