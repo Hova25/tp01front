@@ -42,7 +42,7 @@ class IndexController extends BaseController {
 
     async undoDelete() {
         if (this.selectedListDeleted) {
-            this.model.insertList(this.selectedListDeleted).then(response => {
+            this.model.undoDeleteList(this.selectedListDeleted.id).then(response => {
                 if (response !== undefined) {
                     this.selectedListDeleted = null
                     this.displayUndoDone()

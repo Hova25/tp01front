@@ -120,6 +120,9 @@ class Model {
     deleteList(idList) {
         return this.apiList.delete(idList).then(res => res.status)
     }
+    undoDeleteList(idList) {
+        return this.apiList.undoDelete(idList).then(res => res.status)
+    }
     insertList(list) {
         return this.apiList.insert(list).then(res => res.json())
     }

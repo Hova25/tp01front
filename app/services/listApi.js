@@ -25,4 +25,7 @@ class ListAPI extends BaseApi{
     getAllArchived() {
         return fetchJSON(`${this.baseApiUrl}/archived`, this.token)
     }
+    undoDelete(id) {
+        return fetch(`${this.baseApiUrl}/undo/${id}`, { method: 'DELETE', headers: this.headers })
+    }
 }
