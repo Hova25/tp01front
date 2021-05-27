@@ -1,4 +1,5 @@
 const serviceBaseUrl = "http://localhost:3333"
+
 class BaseApi {
     constructor(baseApiUrl) {
         this.serviceBaseUrl = serviceBaseUrl
