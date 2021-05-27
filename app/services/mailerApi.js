@@ -29,4 +29,17 @@ class MailerAPI extends BaseApi {
         })
     }
 
+    subscription(account){
+        this.headers.set("Content-Type", 'application/json')
+        fetch(`${this.baseApiUrl}/subscription`, {
+            method: 'POST',
+            headers: this.headers,
+            body: JSON.stringify(account)
+        })
+            .catch(e => {
+            console.log("erreur envoie mail")
+            console.log(e)
+        })
+    }
+
 }

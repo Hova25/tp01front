@@ -147,6 +147,7 @@ class AdminPanelController extends BaseController {
     async deleteRole(userId, roleId){
         await this.model.apiRole.deleteUserAccountHasRole(new UserAccountHasRole(roleId, userId))
         await this.loadUpdateUserModal(userId)
+        await this.loadUserAccountTable()
         this.toast("Le role a bien été levé")
     }
 
@@ -161,6 +162,7 @@ class AdminPanelController extends BaseController {
                 }
             }
             await this.loadUpdateUserModal(userId)
+            await this.loadUserAccountTable()
             if(selected>0){
                 this.toast("Le role a bien été assigné")
             }else{
@@ -180,9 +182,6 @@ class AdminPanelController extends BaseController {
 
     async changeActive(userId){
         await this.model.apiUserAccount.changeActive(userId)
-        await this.loadUserAccountTable()
-    }
-    async loadTest(){
         await this.loadUserAccountTable()
     }
 

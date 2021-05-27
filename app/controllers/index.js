@@ -36,9 +36,10 @@ class IndexController extends BaseController {
                         $("#paymentExpiration").value = ""
                         this.getModal("#modalSubscription").close()
                         this.toast("Votre abonnement a bien été pris en compte !")
+                        await this.model.apiMailer.subscription(this.myAccount)
                         $("#bannierToVip").style.display = "none"
-                        this.loadAlert()
-                        this.loadUserPanel()
+                        await this.loadAlert()
+                        await this.loadUserPanel()
                     }
                 })
                 .catch(err => {

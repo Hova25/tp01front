@@ -1,7 +1,7 @@
 <div class="container">
     <h3>Admin PANEL <button class="btn red" onclick="adminPanelController.loadSendAlertModal()">Envoyer notification à tous</button></h3>
     <label for="searchUser">Entrez l'e-mail d'un utilisateur à rechercher</label>
-    <input id="searchUser" onkeyup="adminPanelController.loadTest()" placeholder="Entrez l'e-mail d'un utilisateur à rechercher" type="text" class="validate">
+    <input id="searchUser" onkeyup="adminPanelController.loadUserAccountTable()" placeholder="Entrez l'e-mail d'un utilisateur à rechercher" type="text" class="validate">
     <table class="responsive-table highlight" id="tableUseraccount">
         <thead>
             <tr>
