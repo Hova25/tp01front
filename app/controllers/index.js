@@ -250,7 +250,7 @@ class IndexController extends BaseController {
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a onclick="navigate('index')" style="cursor: pointer">Accueil</a></li>
                         <li><a class="modal-trigger" href="#modalNewShopList" style="cursor: pointer">Nouvelle Liste</a></li>
-                        <li ><a onclick="navigate('partagedList')">Partagé avec moi</a></li>
+                        <li ><a onclick="navigate('partagedlist')">Partagé avec moi</a></li>
                         <li><a onclick="navigate('archives')" style="cursor: pointer">Archives</a></li>
                         <li class="light-blue accent-2" ><a id="profileNav" onclick="navigate('myprofile')">Mon profile</a></li>
                         <li id="adminPanelBtn" style="display: none ;"><a onclick="navigate('adminpanel')" style="cursor: pointer">Panel Admin</a></li>
@@ -259,7 +259,7 @@ class IndexController extends BaseController {
         
                     <ul id='userProfileDropDown' class='dropdown-content'>
                         <li><a onclick="navigate('myprofile')">Mon profile</a></li>
-                        <li><a onclick="navigate('partagedList')">Partagé avec moi</a></li>
+                        <li><a onclick="navigate('partagedlist')">Partagé avec moi</a></li>
                     </ul>
                 </div>
             `
@@ -272,7 +272,7 @@ class IndexController extends BaseController {
                 <li><a id="profileNavMobile" onclick="$('#sousMenuProfile').style.display ==='none' ? $('#sousMenuProfile').style.display = 'block' : $('#sousMenuProfile').style.display = 'none'" style="cursor: pointer"></a></li>
                 <ul id="sousMenuProfile" style="padding: 0 20px; display:none" >
                     <li><a onclick="navigate('myprofile')">Mon profile</a></li>
-                    <li><a onclick="navigate('partagedList')">Partagé avec moi</a></li>
+                    <li><a onclick="navigate('partagedlist')">Partagé avec moi</a></li>
                 </ul>
                 <li id="adminPanelBtnMobile" style="display: none ;"><a onclick="navigate('adminpanel')" style="cursor: pointer">Panel Admin</a></li>
                 <li><a onclick="sessionStorage.removeItem('token'); navigate('index')" style="cursor: pointer">Deconnexion</a></li>
