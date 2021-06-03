@@ -63,6 +63,8 @@ class Model {
             for(let partagedList of partagedLists){
                 partagedList = Object.assign(new PartageList(), partagedList)
                 partagedList.useraffilied = await this.apiUserAccount.getById(partagedList.useraccount_id)
+                partagedList.list =  Object.assign(new List(),partagedList.list)
+                partagedList.list.date = new Date(partagedList.list.date)
                 // partagedList.list = await this.getListById(partagedList.id_list)
                 if(partagedList.list.archived === true){
                     continue
