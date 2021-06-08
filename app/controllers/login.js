@@ -13,12 +13,16 @@ class LoginController extends BaseFormController {
                 test++
             }
             if(test===0) {
-                const user =  await this.service.getByEmail(login)
-                if(user === undefined){
-                    this.toast("Adresse e-mail ou mot de passe incorrect")
-                }else{
+                // const user =  await this.service.getByEmail(login)
+                // if(user === undefined){
+                //     this.toast("Adresse e-mail ou mot de passe incorrect")
+                // }else{
                     await this.service.authenticate(login, password)
-                        .then(res => {
+                        .then(async res => {
+                            const user =  await this.service.getByEmail(login)
+                            if(user === undefined){
+                                this.displayServiceError()
+                            }
                             if(user.active===false){
                                 this.toast(`<span>Attention vous devez activer votre compte par e-mail</span><button class="btn-flat toast-action" onclick="loginController.updateConfirmationCode()">Renvoyer le mail de confirmation</button>`)
                             }else{
@@ -33,7 +37,7 @@ class LoginController extends BaseFormController {
                                 this.displayServiceError()
                             }
                         })
-                }
+                // }
             }
         }
     }
