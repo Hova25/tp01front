@@ -13,10 +13,6 @@ class LoginController extends BaseFormController {
                 test++
             }
             if(test===0) {
-                // const user =  await this.service.getByEmail(login)
-                // if(user === undefined){
-                //     this.toast("Adresse e-mail ou mot de passe incorrect")
-                // }else{
                     await this.service.authenticate(login, password)
                         .then(async res => {
                             const user =  await this.service.getByEmail(login)
