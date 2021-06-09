@@ -13,27 +13,26 @@ class LoginController extends BaseFormController {
                 test++
             }
             if(test===0) {
-                    await this.service.authenticate(login, password)
-                        .then(async res => {
-                            const user =  await this.service.getByEmail(login)
-                            if(user === undefined){
-                                this.displayServiceError()
-                            }
-                            if(user.active===false){
-                                this.toast(`<span>Attention vous devez activer votre compte par e-mail</span><button class="btn-flat toast-action" onclick="loginController.updateConfirmationCode()">Renvoyer le mail de confirmation</button>`)
-                            }else{
-                                sessionStorage.setItem("token", res.token)
-                                window.location.replace("index.html")
-                            }
-                        })
-                        .catch(err => {
-                            if (err === 401) {
-                                this.toast("Adresse e-mail ou mot de passe incorrect")
-                            } else {
-                                this.displayServiceError()
-                            }
-                        })
-                // }
+                await this.service.authenticate(login, password)
+                    .then(async res => {
+                        const user =  await this.service.getByEmail(login)
+                        if(user === undefined){
+                            this.displayServiceError()
+                        }
+                        if(user.active===false){
+                            this.toast(`<span>Attention vous devez activer votre compte par e-mail</span><button class="btn-flat toast-action" onclick="loginController.updateConfirmationCode()">Renvoyer le mail de confirmation</button>`)
+                        }else{
+                            sessionStorage.setItem("token", res.token)
+                            window.location.replace("index.html")
+                        }
+                    })
+                    .catch(err => {
+                        if (err === 401) {
+                            this.toast("Adresse e-mail ou mot de passe incorrect")
+                        } else {
+                            this.displayServiceError()
+                        }
+                    })
             }
         }
     }
