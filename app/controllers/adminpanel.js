@@ -189,7 +189,7 @@ class AdminPanelController extends BaseController {
         $("#nav-bar").innerHTML =
             `
             <div class="nav-wrapper light-green accent-4" >
-                <a onclick="navigate('adminpanel')" style="cursor: pointer; padding-left:10px; font-size: 1.5em" class="brand-logo">Liste de courses V2 Panel Admin</a>
+                <a onclick="navigate('adminpanel')" style="cursor: pointer; padding-left:10px; font-size: 1.5em" class="brand-logo">MyShopList Panel Admin</a>
                 <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
